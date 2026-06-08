@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nuevo Registro de Vacunación - Gestor de Salud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary": "#430f15",
+                "on-surface": "#1a1c1c",
+                "on-secondary-container": "#7a532a",
+                "surface-variant": "#e3e2e2",
+                "on-error": "#ffffff",
+                "surface-container": "#eeeeed",
+                "surface-tint": "#436468",
+                "on-primary-fixed-variant": "#2b4c50",
+                "error-container": "#ffdad6",
+                "surface": "#faf9f9",
+                "on-secondary": "#ffffff",
+                "inverse-surface": "#2f3131",
+                "secondary-container": "#ffca98",
+                "surface-container-lowest": "#ffffff",
+                "on-primary": "#ffffff",
+                "primary": "#00262a",
+                "inverse-primary": "#aacdd1",
+                "outline": "#717879",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-fixed-variant": "#723337",
+                "primary-container": "#1a3c40",
+                "inverse-on-surface": "#f1f1f0",
+                "tertiary-container": "#5f2428",
+                "outline-variant": "#c1c8c9",
+                "background": "#faf9f9",
+                "primary-fixed-dim": "#aacdd1",
+                "on-secondary-fixed-variant": "#623f18",
+                "on-error-container": "#93000a",
+                "primary-fixed": "#c5e9ee",
+                "secondary": "#7d562d",
+                "surface-bright": "#faf9f9",
+                "surface-container-high": "#e8e8e8",
+                "on-tertiary-fixed": "#3b080f",
+                "on-primary-fixed": "#001f23",
+                "tertiary-fixed-dim": "#ffb3b5",
+                "on-background": "#1a1c1c",
+                "secondary-fixed": "#ffdcbd",
+                "on-surface-variant": "#414849",
+                "surface-container-highest": "#e3e2e2",
+                "error": "#ba1a1a",
+                "on-secondary-fixed": "#2c1600",
+                "on-tertiary-container": "#dd8a8d",
+                "tertiary-fixed": "#ffdada",
+                "on-primary-container": "#84a6ab",
+                "secondary-fixed-dim": "#f0bd8b",
+                "surface-container-low": "#f4f3f3",
+                "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sm": "8px",
+                "md": "16px",
+                "xxl": "48px",
+                "container-margin": "20px",
+                "xs": "4px",
+                "gutter": "16px",
+                "xl": "32px",
+                "lg": "24px",
+                "base": "4px"
+            },
+            "fontFamily": {
+                "label-md": ["Inter"],
+                "body-md": ["Inter"],
+                "label-lg": ["Inter"],
+                "display-lg": ["Outfit"],
+                "headline-lg": ["Outfit"],
+                "body-lg": ["Inter"],
+                "headline-md": ["Outfit"],
+                "headline-lg-mobile": ["Outfit"],
+                "title-lg": ["Outfit"]
+            },
+            "fontSize": {
+                "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #faf9f9;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-nav {
+        backdrop-filter: blur(20px);
+        background-color: rgba(250, 249, 249, 0.8);
+      }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(10%) sepia(20%) saturate(1000%) hue-rotate(140deg);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface">
+<!-- Top App Bar (Task-Focused: Suppress Global Nav, use Back action) -->
+<header class="w-full sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm z-50 flex items-center justify-between px-container-margin py-md">
+<button class="active:scale-95 transition-transform p-xs">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary">Nueva Vacuna</h1>
+<div class="w-8"></div> <!-- Spacer for centering -->
+</header>
+<main class="max-w-xl mx-auto px-container-margin pt-lg pb-xxl">
+<!-- Hero Identity Card -->
+<section class="mb-xl bg-primary-container rounded-[24px] p-lg flex items-center gap-md shadow-sm">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-on-primary-container/20">
+<img alt="Mascota" class="w-full h-full object-cover" data-alt="A close-up, high-quality professional portrait of a cheerful Beagle dog against a soft, neutral studio background. The lighting is warm and cinematic, emphasizing the texture of its coat and soulful eyes. The overall mood is sophisticated and caring, reflecting a premium pet health management aesthetic with a palette of ivory and deep petrol tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8TU6a7I2G9jwcYWlkC1zBhahwhGDW_oXiMAvuaYJnDhgoJsNGxRBKF3V6hkzhyok7eXQdV2P-j5TGo1S6Ll-9ryGfB80yw5aCC6K6BdycN3831Y2x3NTJGoFiO6zuG6clReNCqf1FZ0yVmLniQO4Cp-bKhbeqTdVvajpk2O7QtzZ4n_776jE2ll1AwMwLHzq7qvNzUQzhaDvfaiptkw7dB-Go6ok0ZTUKJMntGaECgx2xPdvEd9mD3FxxnZrFWdjKtvmBv8UVt7cY"/>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-primary-container">Oliver</h2>
+<p class="font-label-lg text-label-lg text-on-primary-container/70">Historial de Vacunación</p>
+</div>
+</section>
+<!-- Form Section -->
+<form class="space-y-xl" id="vaccineForm">
+<!-- Basic Info Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-[0px_4px_20px_rgba(26,60,64,0.04)]">
+<div class="space-y-lg">
+<!-- Vaccine Name -->
+<div class="group">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-xs ml-base">Nombre de la Vacuna</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border-none rounded-xl px-md py-md font-body-lg text-on-surface focus:ring-2 focus:ring-primary appearance-none transition-all">
+<option disabled="" selected="">Selecciona una vacuna</option>
+<option>Rabia</option>
+<option>Polivalente (Sextuple)</option>
+<option>Tos de las perreras</option>
+<option>Leptospirosis</option>
+<option>Otra...</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Application Date -->
+<div class="group">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-xs ml-base">Fecha de Aplicación</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-md py-md font-body-lg text-on-surface focus:ring-2 focus:ring-primary transition-all" type="date"/>
+</div>
+<!-- Next Dose -->
+<div class="group">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-xs ml-base">Próxima Dosis (Refuerzo)</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-md py-md font-body-lg text-on-surface focus:ring-2 focus:ring-primary transition-all" type="date"/>
+</div>
+</div>
+</div>
+<!-- Professional Details Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-[0px_4px_20px_rgba(26,60,64,0.04)]">
+<h3 class="font-title-lg text-title-lg mb-md text-primary">Detalles Médicos</h3>
+<div class="space-y-lg">
+<!-- Veterinarian -->
+<div class="group">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-xs ml-base">Veterinario / Clínica</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-md py-md font-body-lg text-on-surface focus:ring-2 focus:ring-primary transition-all" placeholder="Dr. Martinez o Clínica Central" type="text"/>
+</div>
+<!-- Batch/Lot -->
+<div class="group">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-xs ml-base">Número de Lote / Batch</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-md py-md font-body-lg text-on-surface focus:ring-2 focus:ring-primary transition-all" placeholder="Ej: LOT-2024-X99" type="text"/>
+</div>
+</div>
+</div>
+<!-- Attachments Section -->
+<div class="bg-surface-container-lowest rounded-[24px] p-lg border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-center py-xl">
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">add_a_photo</span>
+</div>
+<p class="font-title-lg text-primary mb-xs">Foto del Carnet</p>
+<p class="font-body-md text-on-surface-variant mb-lg px-xl">Sube una foto legible del sello o comprobante de la vacuna.</p>
+<button class="bg-secondary text-on-secondary px-lg py-sm rounded-xl font-label-lg text-label-lg active:scale-95 transition-all shadow-sm" type="button">
+                    Subir foto del carnet
+                </button>
+</div>
+</form>
+</main>
+<!-- Fixed Action Footer -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface/80 backdrop-blur-md p-md border-t border-outline-variant/10 z-50">
+<div class="max-w-xl mx-auto flex gap-md">
+<button class="flex-1 bg-primary text-on-primary py-md rounded-xl font-headline-md text-title-lg active:scale-[0.98] transition-all shadow-lg">
+                Guardar Registro
+            </button>
+</div>
+</footer>
+<!-- Success Feedback Overlay (Hidden by default) -->
+<div class="fixed inset-0 z-[60] bg-surface flex flex-col items-center justify-center p-xl opacity-0 pointer-events-none transition-opacity duration-300" id="successOverlay">
+<div class="w-24 h-24 bg-primary-container rounded-full flex items-center justify-center mb-xl">
+<span class="material-symbols-outlined text-primary text-[48px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md text-center">¡Registro Guardado!</h2>
+<p class="font-body-lg text-on-surface-variant text-center mb-xxl">La información de Oliver ha sido actualizada correctamente en su expediente médico.</p>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-title-lg shadow-md" onclick="window.location.reload()">
+            Volver al Inicio
+        </button>
+</div>
+<script>
+        // Simple Interaction logic for demo
+        const form = document.getElementById('vaccineForm');
+        const submitBtn = document.querySelector('footer button');
+        const successOverlay = document.getElementById('successOverlay');
+
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Mock submission
+            submitBtn.innerHTML = '<span class="animate-spin material-symbols-outlined">sync</span>';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                successOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }, 1200);
+        });
+
+        // Add visual feedback to inputs
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('ring-offset-2');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.classList.remove('ring-offset-2');
+            });
+        });
+    </script>
+</body></html>

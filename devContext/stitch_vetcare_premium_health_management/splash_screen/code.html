@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestor de Salud - Splash</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#430f15",
+                      "on-surface": "#1a1c1c",
+                      "on-secondary-container": "#7a532a",
+                      "surface-variant": "#e3e2e2",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eeeeed",
+                      "surface-tint": "#436468",
+                      "on-primary-fixed-variant": "#2b4c50",
+                      "error-container": "#ffdad6",
+                      "surface": "#faf9f9",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2f3131",
+                      "secondary-container": "#ffca98",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "primary": "#00262a",
+                      "inverse-primary": "#aacdd1",
+                      "outline": "#717879",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#723337",
+                      "primary-container": "#1a3c40",
+                      "inverse-on-surface": "#f1f1f0",
+                      "tertiary-container": "#5f2428",
+                      "outline-variant": "#c1c8c9",
+                      "background": "#faf9f9",
+                      "primary-fixed-dim": "#aacdd1",
+                      "on-secondary-fixed-variant": "#623f18",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#c5e9ee",
+                      "secondary": "#7d562d",
+                      "surface-bright": "#faf9f9",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary-fixed": "#3b080f",
+                      "on-primary-fixed": "#001f23",
+                      "tertiary-fixed-dim": "#ffb3b5",
+                      "on-background": "#1a1c1c",
+                      "secondary-fixed": "#ffdcbd",
+                      "on-surface-variant": "#414849",
+                      "surface-container-highest": "#e3e2e2",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#2c1600",
+                      "on-tertiary-container": "#dd8a8d",
+                      "tertiary-fixed": "#ffdada",
+                      "on-primary-container": "#84a6ab",
+                      "secondary-fixed-dim": "#f0bd8b",
+                      "surface-container-low": "#f4f3f3",
+                      "surface-dim": "#dadada"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "md": "16px",
+                      "xxl": "48px",
+                      "container-margin": "20px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Outfit"],
+                      "headline-lg-mobile": ["Outfit"],
+                      "title-lg": ["Outfit"]
+              },
+              "fontSize": {
+                      "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-splash-in {
+            animation: fadeInScale 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-float {
+            animation: subtleFloat 4s ease-in-out infinite;
+        }
+
+        .radial-glow {
+            background: radial-gradient(circle at center, rgba(132, 166, 171, 0.15) 0%, rgba(0, 38, 42, 0) 70%);
+        }
+
+        .glass-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary overflow-hidden h-screen w-screen flex flex-col items-center justify-center relative">
+<!-- Atmospheric Background Layers -->
+<div class="absolute inset-0 radial-glow pointer-events-none"></div>
+<div class="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-primary-container/30 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-on-primary-fixed-variant/20 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Main Splash Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-center px-container-margin text-center animate-splash-in">
+<!-- Logo Composition -->
+<div class="relative mb-xl group">
+<!-- Glow Effect behind Logo -->
+<div class="absolute inset-0 bg-on-primary-container/20 rounded-full blur-3xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+<div class="w-32 h-32 md:w-40 md:h-40 bg-primary-container rounded-[40px] flex items-center justify-center relative z-10 shadow-2xl border border-white/5 logo-float">
+<span class="material-symbols-outlined text-on-primary-container !text-[64px] md:!text-[80px]" style="font-variation-settings: 'FILL' 0, 'wght' 100;">
+                    medical_services
+                </span>
+<!-- Abstract Pet Overlay -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-on-primary-container !text-[120px] md:!text-[140px] select-none" style="font-variation-settings: 'wght' 100;">
+                        pets
+                    </span>
+</div>
+</div>
+</div>
+<!-- Typography Branding -->
+<div class="space-y-sm">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-on-primary tracking-tight">
+                Gestor de <span class="text-on-primary-container">Salud</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-primary-container/80 max-w-[280px] md:max-w-md mx-auto leading-relaxed">
+                Cuidado profesional para tus compañeros
+            </p>
+</div>
+<!-- Loading Micro-Interaction -->
+<div class="mt-xxl flex flex-col items-center gap-md">
+<div class="h-[2px] w-48 bg-white/10 rounded-full overflow-hidden relative">
+<div class="absolute inset-y-0 left-0 bg-on-primary-container w-0 transition-all duration-[3000ms] ease-out" id="progress-bar"></div>
+</div>
+<span class="font-label-md text-label-md text-white/40 tracking-[0.2em] uppercase">Sincronizando Perfiles</span>
+</div>
+</main>
+<!-- Branding Footer (Apple Style) -->
+<footer class="absolute bottom-xl w-full text-center px-container-margin animate-splash-in" style="animation-delay: 0.5s;">
+<div class="flex items-center justify-center gap-xs opacity-30 text-white">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-md text-label-md">Encryption de Grado Clínico</span>
+</div>
+</footer>
+<!-- Interactive Layer for Splash Exit/Interaction -->
+<div class="absolute inset-0 cursor-pointer z-20" onclick="window.location.reload()"></div>
+<script>
+        // Progress bar simulation
+        window.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('progress-bar');
+            setTimeout(() => {
+                bar.style.width = '100%';
+            }, 100);
+        });
+
+        // Subtle parallax effect on mouse move for desktop
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                document.querySelector('main').style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+    </script>
+</body></html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#430f15",
+                    "on-surface": "#1a1c1c",
+                    "on-secondary-container": "#7a532a",
+                    "surface-variant": "#e3e2e2",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeeed",
+                    "surface-tint": "#436468",
+                    "on-primary-fixed-variant": "#2b4c50",
+                    "error-container": "#ffdad6",
+                    "surface": "#faf9f9",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "secondary-container": "#ffca98",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#00262a",
+                    "inverse-primary": "#aacdd1",
+                    "outline": "#717879",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#723337",
+                    "primary-container": "#1a3c40",
+                    "inverse-on-surface": "#f1f1f0",
+                    "tertiary-container": "#5f2428",
+                    "outline-variant": "#c1c8c9",
+                    "background": "#faf9f9",
+                    "primary-fixed-dim": "#aacdd1",
+                    "on-secondary-fixed-variant": "#623f18",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#c5e9ee",
+                    "secondary": "#7d562d",
+                    "surface-bright": "#faf9f9",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed": "#3b080f",
+                    "on-primary-fixed": "#001f23",
+                    "tertiary-fixed-dim": "#ffb3b5",
+                    "on-background": "#1a1c1c",
+                    "secondary-fixed": "#ffdcbd",
+                    "on-surface-variant": "#414849",
+                    "surface-container-highest": "#e3e2e2",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#2c1600",
+                    "on-tertiary-container": "#dd8a8d",
+                    "tertiary-fixed": "#ffdada",
+                    "on-primary-container": "#84a6ab",
+                    "secondary-fixed-dim": "#f0bd8b",
+                    "surface-container-low": "#f4f3f3",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "xxl": "48px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "title-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      .active-icon {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #c1c8c9;
+        border-radius: 10px;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden custom-scrollbar">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm flex items-center justify-between px-container-margin py-md z-40">
+<h1 class="font-headline-md text-headline-md text-primary">Gestor de Salud</h1>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform" data-icon="search">search</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container border border-outline-variant">
+<img alt="Javier" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a friendly man named Javier in his late 30s, smiling warmly. He is in a brightly lit, modern minimalist home environment with soft natural light. The photo has a clean, high-end aesthetic with a shallow depth of field, focusing on his kind expression to evoke trust and reliability within a premium healthcare application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN7xMEYM095gCqhvfTjxt81Q0uDmDjYd-bNyL3fYK5IGsYkn462NXO2E3FUWk8vIAglhJL4ThpK9RP2VYFZ8iHlFr5PKFuxIZwEF6GKbx0GN9GfmMkzSysCeqoOkDqDp8bLDNeiBnZvxOg7RWBTkjoxo7JDcakTH0ZAlsCHWluXuPctAm2sdnKDYtBqaj0qRZobpGmMu8h7l8Ig4yJV4ve3LxpVU6AYZd1kXlZt0_HNh6aru6Sn9KRckxb55RRMggncActkFY4SSK0"/>
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto px-container-margin pb-32 pt-lg">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center mb-xl">
+<div class="relative group">
+<div class="w-24 h-24 rounded-full overflow-hidden shadow-sm border-4 border-white mb-md">
+<img alt="Javier" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Close-up headshot of a middle-aged man with short dark hair and a groomed beard, wearing a casual navy blue shirt. The lighting is soft and even, highlighting a trustworthy and warm persona. The background is a blurred, airy, ivory-colored living space reflecting a calm and premium atmosphere consistent with a health management app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEqUSN4HYROEUvNhWH1urs_j1E6tI_qHAiX8iySYpsxfSFwB_8aZEqJK7_jCH0arO8GMZxhH3enk-ym481_dt7JGVl8HBjvL3_jhLCFg8sfFPTkx6e_vjcjPJ4ulAeIxHqr5Kfs1Ut6UY9_SSYhhgmBx19nqdXw8ET7249wjIPrW6_A6wdNbnHCEPGmJTTHuZJVbK21ELIQmD9FlvQzIbvkCabi4Ecbk9TdLrJNI5vPMjtI8mgPDEDjVzdZb-pZGw6X6OQmdStMnlw"/>
+</div>
+<div class="absolute bottom-4 right-0 bg-primary text-white p-1 rounded-full shadow-md cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</div>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Javier</h2>
+<p class="font-body-md text-on-surface-variant">Miembro desde Octubre 2023</p>
+</section>
+<!-- Quick Shortcut: My Pets -->
+<section class="mb-xl">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-lg text-title-lg text-primary">Mis Mascotas</h3>
+<button class="text-primary font-label-lg hover:underline">Ver todas</button>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-white rounded-xl p-md flex items-center gap-md shadow-[0px_4px_20px_rgba(26,60,64,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img alt="Dog" class="w-full h-full object-cover" data-alt="A portrait of a playful Golden Retriever puppy looking curiously at the camera. The background is a soft-focus garden with lush green grass and warm golden hour sunlight. The style is professional and heartwarming, conveying the emotional bond of pet companionship in a high-end health app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPR-rViZ_qBp7Kbk3w6Rv5e-xdmlY5BRGQYHkO84SIUvzBRw86zPmNrBThUj-C7SAoBxhO4SQm_r8h2RvHKxGBwB-omimpJfekJg0NbikHNrOxtL2xt2SFVnebJXteiEv1lJ-RLQvLjK_SbNXadMsD8kzpkSm9F1CwsnpJ8ihWzPGjDn7ITIztL18G2OfjCupQvENKhuUlPNwpvhBo-4Cs4OYVQvy47lrDQXhpSNL-BhL8Cks318hsSFRry4u18QHO0uT1Jy2Guner"/>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Luna</p>
+<p class="text-[10px] text-on-surface-variant">Golden Retriever</p>
+</div>
+</div>
+<div class="bg-white rounded-xl p-md flex items-center gap-md shadow-[0px_4px_20px_rgba(26,60,64,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img alt="Cat" class="w-full h-full object-cover" data-alt="An elegant grey Siamese cat sitting gracefully on a white surface. The background is a clean, ivory-toned wall with soft shadows, creating a sophisticated and clinical yet warm aesthetic. The cat's blue eyes are striking, and the image focus is sharp, reinforcing the precision of medical pet care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6T4ITYjlJKc-hD3qDhZq2tgCQZ4zfdIqKk9JvthOAMOB7uXUVJNZBX__79l-EzqWfoMZ3NzgXuWM-wTkWye7zWWIcVkM3ja_1bIiYnpwFkFjXZZBmU-pCKH2N4xIX6GkuZIWRL95fWDqlAkTDX2tSRJ0vzRtEJBIA9Ay9zzKzprBqEjNWgGgWto_pmoaeBuuUlbmVOinNgLpqyb8pSri8vZH_8XNM_CtjCLTbyOVs6lVPuesBk9fN9TDKifqo6lmu_a2a8Blsq7o"/>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Milo</p>
+<p class="text-[10px] text-on-surface-variant">Siamese Cat</p>
+</div>
+</div>
+</div>
+</section>
+<!-- List Sections -->
+<div class="space-y-md">
+<!-- Health Preferences -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(26,60,64,0.04)] overflow-hidden">
+<button class="w-full flex items-center justify-between p-lg hover:bg-surface-variant/20 transition-colors active:bg-surface-variant/40">
+<div class="flex items-center gap-lg">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">medical_services</span>
+</div>
+<div class="text-left">
+<p class="font-body-lg text-on-surface font-medium">Preferencias de Salud</p>
+<p class="text-[12px] text-on-surface-variant">Alergias y condiciones crónicas</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+</div>
+<!-- Notification Settings -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(26,60,64,0.04)] overflow-hidden">
+<button class="w-full flex items-center justify-between p-lg hover:bg-surface-variant/20 transition-colors active:bg-surface-variant/40">
+<div class="flex items-center gap-lg">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">notifications</span>
+</div>
+<div class="text-left">
+<p class="font-body-lg text-on-surface font-medium">Configuración de Notificaciones</p>
+<p class="text-[12px] text-on-surface-variant">Vacunas, medicación y alertas</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+</div>
+<!-- Security and Privacy -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(26,60,64,0.04)] overflow-hidden">
+<button class="w-full flex items-center justify-between p-lg hover:bg-surface-variant/20 transition-colors active:bg-surface-variant/40">
+<div class="flex items-center gap-lg">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">security</span>
+</div>
+<div class="text-left">
+<p class="font-body-lg text-on-surface font-medium">Seguridad y Privacidad</p>
+<p class="text-[12px] text-on-surface-variant">Gestiona tus datos y cuenta</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+</div>
+<!-- Support -->
+<div class="bg-white rounded-xl shadow-[0px_4px_20px_rgba(26,60,64,0.04)] overflow-hidden">
+<button class="w-full flex items-center justify-between p-lg hover:bg-surface-variant/20 transition-colors active:bg-surface-variant/40">
+<div class="flex items-center gap-lg">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">help</span>
+</div>
+<div class="text-left">
+<p class="font-body-lg text-on-surface font-medium">Ayuda y Soporte</p>
+<p class="text-[12px] text-on-surface-variant">Preguntas frecuentes y contacto</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Logout Button -->
+<div class="mt-xxl flex flex-col items-center">
+<button class="w-full py-md rounded-xl text-error bg-error-container/30 border border-error/10 font-label-lg hover:bg-error-container/50 transition-all active:scale-95">
+                Cerrar Sesión
+            </button>
+<p class="mt-md text-[12px] text-outline-variant">Versión 2.4.0 (PetCare Gold)</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg pb-lg pt-md bg-surface/80 dark:bg-surface-container/80 backdrop-blur-[20px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)] rounded-t-[32px]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Recordatorios</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined active-icon">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for list items
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.classList.add('scale-95');
+            });
+            btn.addEventListener('touchend', function() {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Theme sync (optional visual feedback)
+        window.onload = () => {
+            console.log("Health Manager UI Initialized");
+        };
+    </script>
+</body></html>

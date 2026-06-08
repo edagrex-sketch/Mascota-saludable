@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestor de Salud para Mascotas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#430f15",
+                    "on-surface": "#1a1c1c",
+                    "on-secondary-container": "#7a532a",
+                    "surface-variant": "#e3e2e2",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeeed",
+                    "surface-tint": "#436468",
+                    "on-primary-fixed-variant": "#2b4c50",
+                    "error-container": "#ffdad6",
+                    "surface": "#faf9f9",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "secondary-container": "#ffca98",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#00262a",
+                    "inverse-primary": "#aacdd1",
+                    "outline": "#717879",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#723337",
+                    "primary-container": "#1a3c40",
+                    "inverse-on-surface": "#f1f1f0",
+                    "tertiary-container": "#5f2428",
+                    "outline-variant": "#c1c8c9",
+                    "background": "#faf9f9",
+                    "primary-fixed-dim": "#aacdd1",
+                    "on-secondary-fixed-variant": "#623f18",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#c5e9ee",
+                    "secondary": "#7d562d",
+                    "surface-bright": "#faf9f9",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed": "#3b080f",
+                    "on-primary-fixed": "#001f23",
+                    "tertiary-fixed-dim": "#ffb3b5",
+                    "on-background": "#1a1c1c",
+                    "secondary-fixed": "#ffdcbd",
+                    "on-surface-variant": "#414849",
+                    "surface-container-highest": "#e3e2e2",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#2c1600",
+                    "on-tertiary-container": "#dd8a8d",
+                    "tertiary-fixed": "#ffdada",
+                    "on-primary-container": "#84a6ab",
+                    "secondary-fixed-dim": "#f0bd8b",
+                    "surface-container-low": "#f4f3f3",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "xxl": "48px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "title-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-xxl">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm flex items-center justify-between px-container-margin py-md z-40">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="Usuario" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a friendly man in his early 30s, looking into the camera with a soft smile. The lighting is bright and natural, reflecting a clean and modern aesthetic. The background is a soft-focus interior with neutral ivory tones, maintaining a premium and trustworthy medical atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7dVJ47HqL92OqlNjlp7lZDt08TyCyNFT-LCPPjNZTRMQsiOXmDWv_Spc77B8ReSqLr9AmE2obcB9X_PArW2iBOyC7GpRJ_mXerAk-GlGNHO9OWKqvxcoPie8kLJLvldnA8Yu51TIfHYYiuyeKXuQqrr1R7_6coezX-ao5zdQhx88-siEY8cvXxXVqhAuUJruj0gs7-QVk3r2xSmH5ZMqEnzZEb_R1M3ZFLPRu5_pSmpLbr8S-gdcQmF2j8uEVs0iq50P-qWkXHOOc"/>
+</div>
+<div>
+<p class="font-body-md text-on-surface-variant opacity-80">¡Hola, Javier!</p>
+<h1 class="font-headline-md text-headline-md text-primary">Gestor de Salud</h1>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+</header>
+<main class="mt-md space-y-xl">
+<!-- Pet Summary Card (Horizontal Scroll) -->
+<section class="pl-container-margin overflow-hidden">
+<div class="flex gap-md overflow-x-auto hide-scrollbar pr-container-margin py-xs">
+<!-- Pet Card 1 -->
+<div class="min-w-[280px] bg-white rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] p-md flex items-center gap-md active:scale-[0.98] transition-transform">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0">
+<img alt="Luna" class="w-full h-full object-cover" data-alt="A beautiful golden retriever dog named Luna, sitting gracefully in a sun-drenched minimalist living room. The lighting is warm and high-key, emphasizing her soft fur and gentle expression. The overall style is premium and clean, with a palette of ivory, cream, and deep petrol accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3HE5Dkc5Z6XdEF0vfzp_FcuykCHGX4r6TEfbCvQwx3qlrwPoO-2vpbwgqD54dDGEAHXpFOPtrJ0i751HQMPLNkFiFtPwWnfP-_-n-goDagsfKg903OBtFBHKyoQyp3d1z7LyQYwmiiKbRXV-cLFVaRtv18RYiIRT5cAmob5MggeH7kC-Ty-l66C1RQJx2bkhmim9P1bIAss-_420yOxEqFyu5Fvq5pRqMEy7xd0_jf-AS713M1uHLaDopDT7f7agY6jAWKfVjXbPm"/>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Luna</h3>
+<p class="font-body-md text-on-surface-variant">4 años • Golden</p>
+<div class="mt-sm inline-flex items-center gap-xs px-sm py-xs bg-primary/5 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-primary">Al día</span>
+</div>
+</div>
+</div>
+<!-- Pet Card 2 -->
+<div class="min-w-[280px] bg-white rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] p-md flex items-center gap-md active:scale-[0.98] transition-transform">
+<div class="w-20 h-20 rounded-xl overflow-hidden shrink-0">
+<img alt="Max" class="w-full h-full object-cover" data-alt="A sleek, healthy grey tabby cat named Max with striking green eyes, resting on a white minimalist shelf. The lighting is cool and professional, suggesting a clean clinic or a modern home. The background is simple and uncluttered, using ivory and sage green tones for a calm, sophisticated mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa-fwNMufm5vxAipshCTKUoiW1bKTzwO6ccBZ1yXHdTCWfgZPdWKurr_nHnu8Ai1HPrOc4UKY6BNQG3Z7q8J4JBDfq1k_8Cv9U-mL2nKsIKWvuwT1zvOcJJUCaHVGNAHT5XjJ4i3fzOWdbiLWePfolJ0VFSoA_GkFtS0HqDjTUPxLSDX73_M0SKYDe_KrmOrvYf5NB3HFfLkUGzd3Bmzd5rDip8HAk-9v9A0BS3eCWTpszV0uX7IWrvIv5kdkbGOOx5-5DVjE-Cw8U"/>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Max</h3>
+<p class="font-body-md text-on-surface-variant">2 años • Maine Coon</p>
+<div class="mt-sm inline-flex items-center gap-xs px-sm py-xs bg-error-container/20 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-md text-error">1 Alerta</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="px-container-margin grid grid-cols-3 gap-md">
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform">
+<div class="w-14 h-14 bg-secondary-fixed rounded-[16px] flex items-center justify-center text-on-secondary-fixed shadow-sm">
+<span class="material-symbols-outlined" data-icon="vaccines">vaccines</span>
+</div>
+<span class="font-label-md text-center text-on-surface">Nueva Vacuna</span>
+</button>
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform">
+<div class="w-14 h-14 bg-primary-fixed rounded-[16px] flex items-center justify-center text-on-primary-fixed shadow-sm">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+</div>
+<span class="font-label-md text-center text-on-surface">Consulta</span>
+</button>
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform">
+<div class="w-14 h-14 bg-surface-container rounded-[16px] flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+</div>
+<span class="font-label-md text-center text-on-surface">Calendario</span>
+</button>
+</section>
+<!-- Alertas de Vacunación (Elegant Card) -->
+<section class="px-container-margin">
+<div class="relative overflow-hidden bg-primary-container text-on-primary-container rounded-[24px] p-lg shadow-lg">
+<div class="relative z-10 flex flex-col gap-sm">
+<div class="flex items-center gap-xs text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="priority_high">priority_high</span>
+<span class="font-label-lg uppercase tracking-wider">Acción Pendiente</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-white">Vacuna de Rabia</h2>
+<p class="font-body-md text-on-primary-container opacity-90 max-w-[80%]">Max necesita su refuerzo anual para mantener su carnet de salud al día.</p>
+<button class="mt-md bg-white text-primary px-lg py-md rounded-xl font-label-lg w-fit active:scale-95 transition-transform">
+                        Agendar ahora
+                    </button>
+</div>
+<!-- Abstract medical background pattern -->
+<div class="absolute right-[-20px] bottom-[-20px] opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[160px]" data-icon="health_and_safety">health_and_safety</span>
+</div>
+</div>
+</section>
+<!-- Próximas Citas -->
+<section class="px-container-margin space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-primary">Próximas Citas</h3>
+<button class="text-secondary font-label-lg">Ver todas</button>
+</div>
+<div class="bg-white rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] p-md flex items-center gap-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-surface-container rounded-xl shrink-0">
+<span class="font-label-md text-on-surface-variant">MAÑ</span>
+<span class="font-title-lg text-primary leading-none">12</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg font-semibold text-on-surface">Revisión General - Luna</h4>
+<p class="font-body-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
+                        Clínica Veterinaria Central
+                    </p>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-lg text-primary">09:30 AM</span>
+</div>
+</div>
+</section>
+<!-- Sugerencias del Día (Editorial Block) -->
+<section class="px-container-margin pb-xl">
+<div class="relative h-64 rounded-[24px] overflow-hidden group cursor-pointer">
+<img alt="Sugerencia Salud" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A serene scene of two dogs drinking water from a modern ceramic bowl on a light-colored wooden floor. Soft morning sunlight streams through a nearby window, creating a peaceful and healthy atmosphere. The image uses a palette of soft whites, light woods, and deep petrol tones, embodying a high-end wellness brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsEAH-kLVPhr22piVa9G_aisPDdZtHJ7lzOO3WwDbQYrj0B0buKgcL4x2zcOXRD8FRSKx3UuiD2z0LFObJD0nLbOq80BQd7b9jvnTBZXCrJ56B-WXRKvfESerfi1xo0YEq86KJooWPJ8kcttyylLq04G9umtXbUcfhPBX6S0C5cresPItT1Hk-9-Pw9qjNhFw8nG7rpJSQJCm6gjOKnj_mMBOqPARkz6lJZn43xdWpWrT_yAAptkft7jSYmK6oK2dT094yl-R-r2un"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg text-white">
+<span class="font-label-lg bg-secondary/90 backdrop-blur-sm px-md py-xs rounded-full mb-md inline-block">CONSEJO SALUDABLE</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile leading-tight mb-sm">Hidratación en verano: Guía para dueños</h3>
+<p class="font-body-md opacity-80">Cómo asegurar que tus mascotas se mantengan frescas en la ola de calor.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg pb-lg pt-md bg-surface/80 dark:bg-surface-container/80 backdrop-blur-[20px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)] rounded-t-[32px]">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="pets">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Avisos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for list items and buttons
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Potential ripple effect or sound could go here
+            });
+        });
+
+        // Add a soft parallax or reveal effect on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-4');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

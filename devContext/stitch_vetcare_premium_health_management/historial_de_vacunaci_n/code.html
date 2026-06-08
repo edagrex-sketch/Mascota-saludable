@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#430f15",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-container": "#7a532a",
+                        "surface-variant": "#e3e2e2",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eeeeed",
+                        "surface-tint": "#436468",
+                        "on-primary-fixed-variant": "#2b4c50",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf9f9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#ffca98",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#00262a",
+                        "inverse-primary": "#aacdd1",
+                        "outline": "#717879",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#723337",
+                        "primary-container": "#1a3c40",
+                        "inverse-on-surface": "#f1f1f0",
+                        "tertiary-container": "#5f2428",
+                        "outline-variant": "#c1c8c9",
+                        "background": "#faf9f9",
+                        "primary-fixed-dim": "#aacdd1",
+                        "on-secondary-fixed-variant": "#623f18",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#c5e9ee",
+                        "secondary": "#7d562d",
+                        "surface-bright": "#faf9f9",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#3b080f",
+                        "on-primary-fixed": "#001f23",
+                        "tertiary-fixed-dim": "#ffb3b5",
+                        "on-background": "#1a1c1c",
+                        "secondary-fixed": "#ffdcbd",
+                        "on-surface-variant": "#414849",
+                        "surface-container-highest": "#e3e2e2",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-tertiary-container": "#dd8a8d",
+                        "tertiary-fixed": "#ffdada",
+                        "on-primary-container": "#84a6ab",
+                        "secondary-fixed-dim": "#f0bd8b",
+                        "surface-container-low": "#f4f3f3",
+                        "surface-dim": "#dadada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "title-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #faf9f9;
+            color: #1a1c1c;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: #e3e2e2;
+            z-index: 0;
+        }
+        .timeline-item:last-child .timeline-line::before {
+            display: none;
+        }
+        .filter-chip.active {
+            background-color: #1a3c40;
+            color: #ffffff;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-xxl">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm flex items-center justify-between px-container-margin py-md z-40">
+<div class="flex items-center gap-md">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary font-bold">Historial de Vacunas</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a smiling young adult man with clean-shaven face and neat hair, set against a soft, out-of-focus warm interior background. The lighting is bright and airy, reflecting a clean and trustworthy medical-tech aesthetic with a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASbdb_EtYWzV1ARt4axP-98bSzaIf5yufn9ucyNPsZGw_LkfC1nQsa9TcDBdBxjket_XJ4rdBA-3zF0MFZP_oaFWon_Ka1nMn4Gyl_Mgata1qtZHGrr5GiVRvKOwiKHjAXJW5-Z778JaLDUAwWgr9dxF8k-kwTD3xv86Sj7jEoRZpk7RWpI4Ei_7YS37FXtycwhK6fqd-nmCgXijSA_h0S6era71Qobe42dFZFBPYqE2AWUgOY_Bz8O0-dnynwK9UPw8c7TUXO2cLN"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="px-container-margin py-lg max-w-2xl mx-auto">
+<!-- Pet Selector Summary -->
+<div class="flex items-center gap-md mb-xl p-md bg-surface-container-low rounded-xl">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="Pet profile" class="w-full h-full object-cover" data-alt="A charming Golden Retriever puppy looking directly at the camera with warm, expressive eyes. The background is a soft-focus interior with natural morning light, creating a calm and premium atmosphere consistent with a high-end pet health management application. Professional animal photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRVdlvA1V5qEXSB7XasXJkH5GjP0gT-na4ZVNfQhFHuIN7rGJi5_ieXxu5bySKAaxyCu_o4zLrxShJ_qU3fwqCodH4JEx4KN3A8dUpbE2E9WeA2mIhpkR9QfmX5tUpNDl7de4410gbPk5kIIe0LOqJi1-i_0hF39EFFHZ9eslK_PbAxe0PNrwonqMGhMYxsSPOQUziHJHUCqZUwJPIo07zwYcdVCRCVihOVNrHtvEJVLEoAw-ifY3ofHvvaYYHPFuzqMmoebkkJz4x"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Max</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Golden Retriever • 3 años</p>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex gap-sm mb-xl overflow-x-auto pb-xs no-scrollbar">
+<button class="filter-chip active px-lg py-sm rounded-full font-label-lg text-label-lg transition-all duration-200">Todas</button>
+<button class="filter-chip bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full font-label-lg text-label-lg hover:bg-surface-variant transition-all duration-200">Próximas</button>
+<button class="filter-chip bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full font-label-lg text-label-lg hover:bg-surface-variant transition-all duration-200">Completadas</button>
+</div>
+<!-- Timeline Section -->
+<div class="space-y-xl relative">
+<!-- Overdue Vaccine -->
+<div class="timeline-item timeline-line relative flex gap-lg">
+<div class="z-10 mt-1">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center border-4 border-surface">
+<span class="material-symbols-outlined text-error text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="bg-surface p-lg rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] border border-error-container/30 active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-title-lg text-title-lg text-primary">Rabia (Refuerzo)</h3>
+<span class="bg-error/10 text-error px-sm py-1 rounded-lg font-label-md text-label-md">Vencida</span>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md">15 Oct, 2023 (Hace 2 meses)</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-md text-body-md">Dr. Alejandro Ruiz</span>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-surface-variant flex justify-end">
+<button class="text-primary font-label-lg text-label-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+                                AGENDAR AHORA
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pending Vaccine -->
+<div class="timeline-item timeline-line relative flex gap-lg">
+<div class="z-10 mt-1">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center border-4 border-surface">
+<span class="material-symbols-outlined text-on-secondary-container text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">schedule</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="bg-surface p-lg rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-title-lg text-title-lg text-primary">Polivalente Canina</h3>
+<span class="bg-secondary-container/50 text-on-secondary-container px-sm py-1 rounded-lg font-label-md text-label-md">Pendiente</span>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md">12 Ene, 2024</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">medical_services</span>
+<span class="font-body-md text-body-md">Clínica Veterinaria Central</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Completed Vaccine -->
+<div class="timeline-item timeline-line relative flex gap-lg">
+<div class="z-10 mt-1">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center border-4 border-surface">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="bg-surface p-lg rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] active:scale-[0.98] transition-transform opacity-80">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-title-lg text-title-lg text-primary">Tos de las Perreras</h3>
+<span class="bg-primary/10 text-primary px-sm py-1 rounded-lg font-label-md text-label-md">Completada</span>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md">05 Jun, 2023</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-md text-body-md">Dra. Elena Gómez</span>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-surface-variant flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Certificado disponible</span>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Completed Vaccine 2 -->
+<div class="timeline-item timeline-line relative flex gap-lg">
+<div class="z-10 mt-1">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center border-4 border-surface">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="bg-surface p-lg rounded-[24px] shadow-[0px_4px_20px_rgba(26,60,64,0.04)] active:scale-[0.98] transition-transform opacity-80">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-title-lg text-title-lg text-primary">Parvovirus Canino</h3>
+<span class="bg-primary/10 text-primary px-sm py-1 rounded-lg font-label-md text-label-md">Completada</span>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md">20 Ene, 2023</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-md text-body-md">Dr. Alejandro Ruiz</span>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-surface-variant flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Certificado disponible</span>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-28 right-6 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center active:scale-90 transition-transform duration-200 z-40 group">
+<span class="material-symbols-outlined text-[28px]">add</span>
+<span class="absolute right-full mr-4 bg-primary text-white px-md py-sm rounded-lg font-label-lg text-label-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Añadir Registro</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg pb-lg pt-md bg-surface/80 dark:bg-surface-container/80 backdrop-blur-[20px] rounded-t-[32px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Recordatorios</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</a>
+</nav>
+<script>
+        // Simple filter interaction
+        const chips = document.querySelectorAll('.filter-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('active');
+                    c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                chip.classList.add('active');
+                chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+            });
+        });
+
+        // Micro-interaction for timeline cards
+        const cards = document.querySelectorAll('.timeline-item > div > div');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0px 10px 30px rgba(26, 60, 64, 0.08)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = '0px 4px 20px rgba(26, 60, 64, 0.04)';
+            });
+        });
+    </script>
+</body></html>

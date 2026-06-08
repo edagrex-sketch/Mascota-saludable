@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luna - Gestor de Salud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#430f15",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-container": "#7a532a",
+                        "surface-variant": "#e3e2e2",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eeeeed",
+                        "surface-tint": "#436468",
+                        "on-primary-fixed-variant": "#2b4c50",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf9f9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#ffca98",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#00262a",
+                        "inverse-primary": "#aacdd1",
+                        "outline": "#717879",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#723337",
+                        "primary-container": "#1a3c40",
+                        "inverse-on-surface": "#f1f1f0",
+                        "tertiary-container": "#5f2428",
+                        "outline-variant": "#c1c8c9",
+                        "background": "#faf9f9",
+                        "primary-fixed-dim": "#aacdd1",
+                        "on-secondary-fixed-variant": "#623f18",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#c5e9ee",
+                        "secondary": "#7d562d",
+                        "surface-bright": "#faf9f9",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#3b080f",
+                        "on-primary-fixed": "#001f23",
+                        "tertiary-fixed-dim": "#ffb3b5",
+                        "on-background": "#1a1c1c",
+                        "secondary-fixed": "#ffdcbd",
+                        "on-surface-variant": "#414849",
+                        "surface-container-highest": "#e3e2e2",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-tertiary-container": "#dd8a8d",
+                        "tertiary-fixed": "#ffdada",
+                        "on-primary-container": "#84a6ab",
+                        "secondary-fixed-dim": "#f0bd8b",
+                        "surface-container-low": "#f4f3f3",
+                        "surface-dim": "#dadada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "title-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-nav {
+            background: rgba(250, 249, 249, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .medical-card {
+            box-shadow: 0px 4px 20px rgba(26, 60, 64, 0.04);
+        }
+        .active-pill {
+            position: relative;
+        }
+        .active-pill::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: currentColor;
+            border-radius: 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top App Bar (Context: Task-Focused, suppresses main nav in mobile but retains branding) -->
+<header class="w-full sticky top-0 z-40 flex items-center justify-between px-container-margin py-md bg-surface/80 backdrop-blur-md shadow-sm">
+<div class="flex items-center gap-md">
+<button aria-label="Volver" class="flex items-center justify-center p-base active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary">Ficha de Luna</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary active:scale-95 transition-transform cursor-pointer">share</span>
+<span class="material-symbols-outlined text-primary active:scale-95 transition-transform cursor-pointer">more_vert</span>
+</div>
+</header>
+<main class="pb-xxl">
+<!-- Hero Header -->
+<section class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+<img alt="Luna the Golden Retriever" class="w-full h-full object-cover" data-alt="A beautiful adult Golden Retriever named Luna sitting gracefully in a sun-drenched park with lush green grass. The lighting is warm and golden, capturing the detailed texture of her honey-colored fur and friendly expression. The background is softly blurred with natural bokeh, maintaining a premium, high-end photography aesthetic that feels serene and professional. The overall mood is calm, emphasizing a healthy and well-cared-for pet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7ZL4JufYNt6bDNzvSQA1w81nGUqCn_t1YfSFCqovpH2r5iUUJl1droQ1Gv_UJyf61okHj7iWpdSPGaLVjuxZB1VabgRMSXnPOZpW-OStBIyqmhYrZ4DcddB_7gVqImZ4hNHxVFeteLhbku91uJGOgUAYIxiW3QSMNLDX09HBuvEZnAqMryGDOu46w8Jg0yJI9G5Y2SjIOvRYAahm_BlxgvofveB9ttGFpfILIom-gXDdX95-vGq-ejgA7UUzFpB2kUZdBdfP4Twkf"/>
+<!-- Floating Data Chips -->
+<div class="absolute bottom-0 left-0 w-full p-container-margin bg-gradient-to-t from-primary/80 to-transparent pt-xl">
+<div class="max-w-5xl mx-auto flex flex-col gap-sm">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-white">Luna</h2>
+<div class="flex flex-wrap gap-sm">
+<span class="bg-white/20 backdrop-blur-md px-md py-xs rounded-full text-white font-label-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">pets</span> Golden Retriever
+                        </span>
+<span class="bg-white/20 backdrop-blur-md px-md py-xs rounded-full text-white font-label-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span> 3 años
+                        </span>
+<span class="bg-white/20 backdrop-blur-md px-md py-xs rounded-full text-white font-label-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">monitor_weight</span> 28.5 kg
+                        </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Navigation Tabs -->
+<nav class="sticky top-[64px] bg-surface z-30 border-b border-surface-variant overflow-x-auto hide-scrollbar">
+<div class="max-w-5xl mx-auto flex px-container-margin">
+<button class="px-lg py-md text-primary font-label-lg whitespace-nowrap active-pill">Resumen</button>
+<button class="px-lg py-md text-on-surface-variant font-label-lg whitespace-nowrap">Médico</button>
+<button class="px-lg py-md text-on-surface-variant font-label-lg whitespace-nowrap">Vacunas</button>
+<button class="px-lg py-md text-on-surface-variant font-label-lg whitespace-nowrap">Diario</button>
+</div>
+</nav>
+<div class="max-w-5xl mx-auto px-container-margin mt-xl space-y-xl">
+<!-- Quick Actions -->
+<div class="flex flex-col md:flex-row gap-md">
+<button class="flex-1 bg-primary text-white py-md px-lg rounded-xl font-label-lg flex items-center justify-center gap-sm active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">vaccines</span>
+                    Registrar Vacuna
+                </button>
+<button class="flex-1 border-2 border-primary text-primary py-md px-lg rounded-xl font-label-lg flex items-center justify-center gap-sm active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">medical_services</span>
+                    Nueva Consulta
+                </button>
+</div>
+<!-- Section 1: Vaccine Timeline (Bento Layout) -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-title-lg text-title-lg text-primary">Cronograma de Vacunación</h3>
+<button class="text-secondary font-label-lg">Ver Historial</button>
+</div>
+<div class="bg-white rounded-[24px] medical-card p-lg overflow-hidden relative">
+<!-- Subtle background decoration -->
+<div class="absolute top-0 right-0 p-lg opacity-5">
+<span class="material-symbols-outlined text-[120px]">vaccines</span>
+</div>
+<div class="relative space-y-lg">
+<!-- Past Vaccine -->
+<div class="flex gap-lg">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="w-0.5 flex-1 bg-outline-variant my-xs"></div>
+</div>
+<div class="pb-md">
+<p class="font-label-lg text-on-surface-variant">15 Oct, 2023</p>
+<h4 class="font-title-lg text-primary">Rabia Anual</h4>
+<p class="text-body-md text-on-surface-variant">Dosis aplicada por Dr. Morales • Clínica San Roque</p>
+</div>
+</div>
+<!-- Upcoming Vaccine -->
+<div class="flex gap-lg">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center ring-4 ring-primary/5">
+<span class="material-symbols-outlined">event</span>
+</div>
+<div class="w-0.5 flex-1 bg-outline-variant my-xs border-dashed"></div>
+</div>
+<div class="pb-md">
+<div class="flex items-center gap-sm">
+<p class="font-label-lg text-primary font-bold">PRÓXIMA: 22 Nov, 2023</p>
+<span class="bg-error-container text-on-error-container text-[10px] px-sm py-[2px] rounded-full font-bold uppercase tracking-wider">En 5 días</span>
+</div>
+<h4 class="font-title-lg text-primary">Polivalente (Refuerzo)</h4>
+<p class="text-body-md text-on-surface-variant">Incluye Distemper, Parvovirus y Adenovirus.</p>
+</div>
+</div>
+<!-- Future Vaccine -->
+<div class="flex gap-lg opacity-60">
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined">circle</span>
+</div>
+</div>
+<div>
+<p class="font-label-lg text-on-surface-variant">15 Mar, 2024</p>
+<h4 class="font-title-lg text-primary">Tos de las Perreras</h4>
+<p class="text-body-md text-on-surface-variant">Recordatorio automático programado.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Recent Visits -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-title-lg text-title-lg text-primary">Consultas Recientes</h3>
+<button class="text-secondary font-label-lg">Explorar Notas</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Visit Card 1 -->
+<div class="bg-white rounded-[24px] medical-card p-lg flex flex-col gap-md border-l-4 border-secondary active:scale-[0.99] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="bg-secondary-fixed text-on-secondary-fixed px-sm py-xs rounded-lg font-label-md">Gastrointestinal</div>
+<span class="text-on-surface-variant font-label-md">02 Sep, 2023</span>
+</div>
+<div>
+<h4 class="font-title-lg text-primary mb-xs">Revisión de Gastritis</h4>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Paciente presenta vómitos leves. Se receta dieta blanda y probióticos por 7 días.</p>
+</div>
+<div class="flex items-center gap-sm pt-sm border-t border-surface-variant">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Vet Portrait" class="w-full h-full object-cover" data-alt="A professional portrait of a confident male veterinarian in a clean white medical coat with a stethoscope around his neck. He has a warm, trustworthy smile. The background is a clean, modern clinic setting with soft clinical lighting, maintaining a premium medical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4FOCTnlU6p5HVNiWK8lWuxQiRSRtK062wOtxDlyoIG6uNc4mBBodFSmeCwVSucYWhpvWK4Qpb9u5nzSEpF_JNselJ2ZMogd4xMcEK-j22nNDa-Ie6sYfprQ0EoGLt1G5Gz4s3IsxMnJ9dBAMKU06t2T_FzKGOnVqxE56bunrgDiVyS5coLv662huQWli9_0kjAKoQ-k4WBbr-W0TkbdntiNT3y-wgrFgcUJpioo6_jNRH-IkVQp_xleEgEGKYT_EOVcMiljtQzS9x"/>
+</div>
+<span class="text-body-md font-medium">Dr. Carlos Vaca</span>
+</div>
+</div>
+<!-- Visit Card 2 -->
+<div class="bg-white rounded-[24px] medical-card p-lg flex flex-col gap-md border-l-4 border-primary-fixed-dim active:scale-[0.99] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-lg font-label-md">Preventivo</div>
+<span class="text-on-surface-variant font-label-md">15 Jul, 2023</span>
+</div>
+<div>
+<h4 class="font-title-lg text-primary mb-xs">Control de Peso &amp; Oído</h4>
+<p class="text-body-md text-on-surface-variant line-clamp-2">Luna mantiene peso ideal. Limpieza de conductos auditivos externos realizada exitosamente.</p>
+</div>
+<div class="flex items-center gap-sm pt-sm border-t border-surface-variant">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Vet Portrait" class="w-full h-full object-cover" data-alt="A professional portrait of a focused female veterinarian in a navy blue medical scrub, looking friendly and professional. The scene is brightly lit with natural light in a high-end veterinary hospital. She appears competent and empathetic, fitting the premium medical-grade aesthetic of the application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEWJi0ZepPN4bVN3VbYRmyEJ5RCf1GA0yMRzM2d0pMGg9xTNefaWh-U1XoaCXsvu8KKuqtt6DFMe-CE3PEmXL2MXPETAI4rEk6meqJ7NgIeYagCWg1fNcgUCE2N3J6joz0oHT204tKSGEbusANq1fL6G4ZaBGgJbSBuohPoMfuYXVTNOCNtacVUY1uweoKEsRDlvPiwhJilq5s3V0DMORx6RHyk7DIlBhvZkqAzjasaRETi-BoQqTaa3dZyukXLT7D5FKPVSB3x0c8"/>
+</div>
+<span class="text-body-md font-medium">Dra. Ana López</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Navigation suppressed per relevance check: this is a detail sub-page with back action -->
+<!-- However, for persistent feel in some contexts we could include a slimmed version, but as per "The Destination Rule" and "Automatic Suppression", we prioritize content focus on this "Details" screen. -->
+<script>
+        // Micro-interactions for tab switching
+        const tabs = document.querySelectorAll('nav button');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('text-primary', 'active-pill');
+                    t.classList.add('text-on-surface-variant');
+                });
+                tab.classList.remove('text-on-surface-variant');
+                tab.classList.add('text-primary', 'active-pill');
+            });
+        });
+
+        // Simple card interaction simulation
+        document.querySelectorAll('.medical-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.boxShadow = '0px 2px 10px rgba(26, 60, 64, 0.02)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = '0px 4px 20px rgba(26, 60, 64, 0.04)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = '0px 4px 20px rgba(26, 60, 64, 0.04)';
+            });
+        });
+    </script>
+</body></html>

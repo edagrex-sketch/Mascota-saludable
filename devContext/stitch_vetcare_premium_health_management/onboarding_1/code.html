@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - Gestor de Salud para Mascotas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#430f15",
+                    "on-surface": "#1a1c1c",
+                    "on-secondary-container": "#7a532a",
+                    "surface-variant": "#e3e2e2",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeeed",
+                    "surface-tint": "#436468",
+                    "on-primary-fixed-variant": "#2b4c50",
+                    "error-container": "#ffdad6",
+                    "surface": "#faf9f9",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "secondary-container": "#ffca98",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#00262a",
+                    "inverse-primary": "#aacdd1",
+                    "outline": "#717879",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#723337",
+                    "primary-container": "#1a3c40",
+                    "inverse-on-surface": "#f1f1f0",
+                    "tertiary-container": "#5f2428",
+                    "outline-variant": "#c1c8c9",
+                    "background": "#faf9f9",
+                    "primary-fixed-dim": "#aacdd1",
+                    "on-secondary-fixed-variant": "#623f18",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#c5e9ee",
+                    "secondary": "#7d562d",
+                    "surface-bright": "#faf9f9",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed": "#3b080f",
+                    "on-primary-fixed": "#001f23",
+                    "tertiary-fixed-dim": "#ffb3b5",
+                    "on-background": "#1a1c1c",
+                    "secondary-fixed": "#ffdcbd",
+                    "on-surface-variant": "#414849",
+                    "surface-container-highest": "#e3e2e2",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#2c1600",
+                    "on-tertiary-container": "#dd8a8d",
+                    "tertiary-fixed": "#ffdada",
+                    "on-primary-container": "#84a6ab",
+                    "secondary-fixed-dim": "#f0bd8b",
+                    "surface-container-low": "#f4f3f3",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "xxl": "48px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "title-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #FAFAFA;
+        color: #1a1c1c;
+        overflow-x: hidden;
+      }
+      .organic-blob {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        animation: morph 12s ease-in-out infinite;
+      }
+      @keyframes morph {
+        0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+        33% { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+        66% { border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; }
+      }
+      .stagger-up {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      @keyframes fadeInUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .soft-shadow {
+        box-shadow: 0px 4px 20px rgba(26, 60, 64, 0.04);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface">
+<main class="min-h-screen flex flex-col max-w-md mx-auto relative px-container-margin overflow-hidden">
+<!-- Header / Skip Button -->
+<header class="w-full flex justify-end py-lg">
+<button class="font-label-lg text-label-lg text-secondary uppercase tracking-widest active:scale-95 transition-transform">
+                Saltar
+            </button>
+</header>
+<!-- Image Canvas -->
+<section class="flex-grow flex items-center justify-center relative min-h-[353px]">
+<!-- Decorative atmospheric elements -->
+<div class="absolute w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10 animate-pulse"></div>
+<!-- Main organic-shaped image -->
+<div class="organic-blob w-72 h-80 overflow-hidden soft-shadow border-4 border-white stagger-up" style="animation-delay: 0.1s;">
+<img alt="Happy pet owner with Golden Retriever" class="w-full h-full object-cover" data-alt="A warm, emotionally resonant portrait of a smiling woman embracing her happy Golden Retriever in a bright, sun-drenched outdoor garden. The lighting is soft and golden, creating a premium and trustworthy medical-meets-lifestyle aesthetic. The composition is clean with a high-key background that complements a sophisticated ivory and petrol color palette, emphasizing the deep bond between human and animal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRAYhSuk9Q-hT8h3R9LLlJDP5TUwRunu7vy3csixHnPgC2-0Uwi62U2_-keC3S8m3UzxVSSRKSTPvjtrUV15dAFW6bcRl9AL0cEt6MlY-8Ev6pGM9Gy6Dm2LsSW6ZMimNF4j_-3KqSmRxjyN-4_yqLCcHb9rCZOrd1f1JZF3yQS1a-8bB6fD3Y2nTeSY_Jn69YOVWS-UKXkX8S1rhe-kqHBUt9uL-PtmMk7qVhLXFPeVRVPgHhyHvJMvtUVf3d22ybfDJ1BYv-oDqS"/>
+</div>
+</section>
+<!-- Content Area -->
+<section class="pb-xxl space-y-xl">
+<div class="text-center space-y-md">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight stagger-up" style="animation-delay: 0.3s;">
+                    Todo su historial en un solo lugar
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant stagger-up" style="animation-delay: 0.4s;">
+                    Gestiona vacunas, consultas y recordatorios con la profesionalidad que tu mascota merece.
+                </p>
+</div>
+<!-- Progress Indicator -->
+<div class="flex justify-center items-center space-x-sm stagger-up" style="animation-delay: 0.5s;">
+<span class="w-6 h-1.5 rounded-full bg-primary transition-all duration-300"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</div>
+<!-- Actions -->
+<div class="flex flex-col space-y-md stagger-up" style="animation-delay: 0.6s;">
+<button class="w-full py-md bg-primary text-on-primary rounded-[16px] font-title-lg text-title-lg soft-shadow active:scale-95 transition-transform flex items-center justify-center group">
+                    Siguiente
+                    <span class="material-symbols-outlined ml-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Subtle ambient animation script -->
+<script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const blob = document.querySelector('.organic-blob');
+                
+                // Light touch interaction on the blob
+                blob.addEventListener('touchstart', () => {
+                    blob.style.transform = 'scale(0.98)';
+                    blob.style.transition = 'transform 0.3s ease';
+                });
+                
+                blob.addEventListener('touchend', () => {
+                    blob.style.transform = 'scale(1)';
+                });
+
+                // Simple entrance animation for text
+                const elements = document.querySelectorAll('.stagger-up');
+                elements.forEach((el, index) => {
+                    el.style.animationDelay = `${0.2 + (index * 0.1)}s`;
+                });
+            });
+        </script>
+</main>
+<!-- Visual Polish: Soft Grain Overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
+</body></html>

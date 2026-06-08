@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sugerencias de Cuidado - Gestor de Salud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#430f15",
+                      "on-surface": "#1a1c1c",
+                      "on-secondary-container": "#7a532a",
+                      "surface-variant": "#e3e2e2",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eeeeed",
+                      "surface-tint": "#436468",
+                      "on-primary-fixed-variant": "#2b4c50",
+                      "error-container": "#ffdad6",
+                      "surface": "#faf9f9",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2f3131",
+                      "secondary-container": "#ffca98",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "primary": "#00262a",
+                      "inverse-primary": "#aacdd1",
+                      "outline": "#717879",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#723337",
+                      "primary-container": "#1a3c40",
+                      "inverse-on-surface": "#f1f1f0",
+                      "tertiary-container": "#5f2428",
+                      "outline-variant": "#c1c8c9",
+                      "background": "#faf9f9",
+                      "primary-fixed-dim": "#aacdd1",
+                      "on-secondary-fixed-variant": "#623f18",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#c5e9ee",
+                      "secondary": "#7d562d",
+                      "surface-bright": "#faf9f9",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary-fixed": "#3b080f",
+                      "on-primary-fixed": "#001f23",
+                      "tertiary-fixed-dim": "#ffb3b5",
+                      "on-background": "#1a1c1c",
+                      "secondary-fixed": "#ffdcbd",
+                      "on-surface-variant": "#414849",
+                      "surface-container-highest": "#e3e2e2",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#2c1600",
+                      "on-tertiary-container": "#dd8a8d",
+                      "tertiary-fixed": "#ffdada",
+                      "on-primary-container": "#84a6ab",
+                      "secondary-fixed-dim": "#f0bd8b",
+                      "surface-container-low": "#f4f3f3",
+                      "surface-dim": "#dadada"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "md": "16px",
+                      "xxl": "48px",
+                      "container-margin": "20px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Outfit"],
+                      "headline-lg-mobile": ["Outfit"],
+                      "title-lg": ["Outfit"]
+              },
+              "fontSize": {
+                      "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md shadow-sm flex items-center justify-between px-container-margin py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile photo" data-alt="A professional studio portrait of a kind-looking person with soft, warm lighting against a neutral, minimal ivory background. The photograph is high-definition, emphasizing a friendly and trustworthy expression, fitting a premium medical and pet care application aesthetic. The skin tones are natural and the overall mood is serene and polished." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnKvNz7HDJfNJ9xWRhWIZF40rI4Z4XdL8VbCyMaDN_vFVJxRptFn3UHBBk6i8m7Nl_i6fBQgDN9w4WPyGy2fnlrA7wxtRrSHm4BF1Ov7-lbC1FQelz4Ku42Y7yxO4DNhzgDOAAqN6UZm-1XL6HnXpoFdvAvZDGA_FHCwFv0Bm_-qIGhMeR4HiA2gC_SnI8fdoO7Cx6b4SrD0Q3Rere3IEAnoOcoO6EQTD-SSREudE0N8_UZBWMP3uJvDCF5Rb5pcEJi6cz9yY49g8I"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Gestor de Salud</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="active:scale-95 transition-transform hover:opacity-80">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+<button class="active:scale-95 transition-transform hover:opacity-80">
+<span class="material-symbols-outlined text-primary">bookmark</span>
+</button>
+</div>
+</header>
+<main class="px-container-margin pb-xxl">
+<!-- Search & Filter Bar -->
+<section class="mt-lg flex gap-md items-center">
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="w-full bg-surface-container border-none rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary text-body-md transition-all" placeholder="Buscar consejos..." type="text"/>
+</div>
+<button class="bg-primary-container text-on-primary-container p-3 rounded-xl flex items-center justify-center hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</section>
+<!-- Categories Horizontal Scroll -->
+<section class="mt-xl overflow-x-auto">
+<div class="flex gap-sm pb-sm">
+<button class="px-md py-2 bg-primary text-on-primary rounded-full font-label-lg whitespace-nowrap active:scale-95 transition-all">Todos</button>
+<button class="px-md py-2 bg-white shadow-sm text-on-surface-variant rounded-full font-label-lg whitespace-nowrap active:scale-95 transition-all hover:bg-surface-container">Nutrición</button>
+<button class="px-md py-2 bg-white shadow-sm text-on-surface-variant rounded-full font-label-lg whitespace-nowrap active:scale-95 transition-all hover:bg-surface-container">Ejercicio</button>
+<button class="px-md py-2 bg-white shadow-sm text-on-surface-variant rounded-full font-label-lg whitespace-nowrap active:scale-95 transition-all hover:bg-surface-container">Salud Mental</button>
+<button class="px-md py-2 bg-white shadow-sm text-on-surface-variant rounded-full font-label-lg whitespace-nowrap active:scale-95 transition-all hover:bg-surface-container">Higiene</button>
+</div>
+</section>
+<!-- Featured Insight Card -->
+<section class="mt-xl">
+<div class="relative overflow-hidden bg-secondary-container/30 rounded-[32px] p-lg border border-secondary/10">
+<div class="absolute top-0 right-0 -mr-8 -mt-8 w-48 h-48 bg-secondary/5 rounded-full blur-3xl"></div>
+<div class="flex items-start justify-between relative z-10">
+<div class="flex-1">
+<span class="inline-flex items-center gap-xs text-secondary font-label-lg mb-sm">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                            Insight Personalizado
+                        </span>
+<h2 class="font-title-lg text-title-lg text-on-secondary-container leading-tight mb-md">
+                            Luna necesita más hidratación esta semana debido al calor.
+                        </h2>
+<button class="text-primary font-label-lg flex items-center gap-xs hover:gap-sm transition-all">
+                            Ver detalles <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[40px]" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Article Cards - Editorial Grid -->
+<section class="mt-xxl">
+<div class="flex items-center justify-between mb-lg">
+<h3 class="font-headline-md text-headline-md text-primary">Sugerencias para ti</h3>
+<button class="text-primary font-label-lg">Ver todo</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Card 1: Main Article -->
+<article class="group cursor-pointer col-span-1 md:col-span-2 bg-white rounded-[24px] overflow-hidden shadow-[0px_4px_20px_rgba(26,60,64,0.04)] hover:shadow-lg transition-shadow">
+<div class="h-64 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A gourmet, high-end pet meal presented in a minimalist ceramic bowl on a clean marble surface. The lighting is soft and bright, using a high-key light mode aesthetic with soft shadows. The scene is clean, emphasizing nutritional quality and professional pet health care, with a muted palette of ivory, sage, and deep petrol." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX8VteBlbGTtQbo9bJH1q_c7cRxNJPvQbYV20b8cTjQ5DTVOL4AotDlJFq4oE6O_UbGK-hoYKGo0ZttRRoBrO0zgE6OXpiLEL44lLt2szwirJsRlb1_pjWKkF6Ewkr6cfq4Elqpb6AhaVguhMxeO7HlukWDlaa5vUc2-9pEKjmRT-vwStKAkjqrQnsELmqb73VsAn-fi6YAVpRZOMzhTVxgufONwIz7eFOksFAu6QbLBKqyh7XBHanjl2igS51V8f-cZRI8ybjA8Hx"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary text-on-primary px-3 py-1 rounded-full text-label-md">Destacado</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex items-center gap-xs text-outline mb-sm">
+<span class="font-label-lg">Nutrición</span>
+<span>•</span>
+<span class="font-label-lg">8 min lectura</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-md group-hover:text-secondary transition-colors">Guía de nutrición avanzada para perros adultos</h4>
+<p class="text-on-surface-variant line-clamp-2 mb-lg">Descubre cómo los micro-nutrientes influyen en la longevidad y el brillo del pelaje de tu mejor amigo con nuestra guía experta.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="A portrait of a professional veterinarian in a clean white coat, smiling warmly. The style is modern, professional, and clinical with a soft, inviting aesthetic consistent with a high-end medical pet care brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyUfP8TRt6XvKnAEUcvHIdW8MM_XglNn5hH5GAzMEvg56WSKMPHk-LFegPQR28DNFgyi9eoy4HCHWp7rMjrEHaU-Q7Rd_UFY2Lg7H9_3oQTdw1sBl6msJIyGtnaREAsIS2cB_WzjEd2VXpLhJuJ9ebVPOpjj2e9AbquIVcKsp9xr4SzQ51ORcTl8WNDEVXSSNqpm9LUowiN-Ab1UupNNQTMITV0BDvkeuW634YHuEHNvF_WuulY6Pjv15ksSq83R-ojXHLvj23a-Da"/>
+<span class="text-label-md font-medium">Dra. Clara Méndez</span>
+</div>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-outline">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: Secondary -->
+<article class="group cursor-pointer bg-white rounded-[24px] overflow-hidden shadow-[0px_4px_20px_rgba(26,60,64,0.04)] hover:shadow-lg transition-shadow">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A close-up shot of a pet first aid kit with essential medical items like bandages and antiseptic, organized neatly on a white medical surface. The aesthetic is extremely clean, minimalist, and professional, using a bright light-mode palette with subtle accents of deep petrol and clean whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC-22Qd4ab5Xvlkj-nah8T_1XgPbVli9CSlMB5ObDOEiakkbLiw0I9p0lMdQIeJeDj-nLz0QtPA1glqlQoml5nFOhUlrZ3L-OhihxuFwj5cByQLVdxbe6-qrBbLEqZN5iDLJJdkVilDCpA1cUWxfPSNTvwwoAXX7CialFE1u3VK8l8ZKh0e02ThSFZ4ixeX5uI7BwuRDCFIH8lVEUeTR807p0ZFZ5ScfkOAZlIE9y4ZSugquKZAWuEw1bR0XKK6CU1cAw5-chaK999"/>
+</div>
+<div class="p-lg">
+<span class="text-outline font-label-lg mb-sm block">Salud</span>
+<h4 class="font-title-lg text-title-lg text-primary mb-md group-hover:text-secondary transition-colors">Primeros auxilios básicos para el hogar</h4>
+<p class="text-on-surface-variant text-body-md line-clamp-2">Lo que todo dueño de mascota debe saber para actuar rápido ante emergencias comunes.</p>
+</div>
+</article>
+<!-- Card 3: Secondary -->
+<article class="group cursor-pointer bg-white rounded-[24px] overflow-hidden shadow-[0px_4px_20px_rgba(26,60,64,0.04)] hover:shadow-lg transition-shadow">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A modern, minimalist digital calendar interface shown on a high-end tablet screen, highlighting pet health dates. The surrounding environment is bright and airy, a high-key lifestyle shot with soft morning light and a clean, serene mood. The color scheme is consistent with the primary petrol and white medical theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqsg7IUoMCNpXsMcE70XeBHyPY8wQJ-tzRQawq4khNkvFBfZmtSWWu0-PiL7cpEGR1xKWrCHpigfrjCj08blri9HfmTIY9dcu7RVifEo07CtFHxIiFvl69_2lISqP_xVblK6_f83gzGhjopJb84QLGTMo_vrEsrVuKFjQCbQdMt4Ghqc2A5qiodnN0sYXtfQFMkP-0I0VF2fTVtkRVJe3U5ZDsH4N7rwO6UTogCCQGQoqKDL-oJPAdV6_qCiaBFmt31gm3KzktHKtH"/>
+</div>
+<div class="p-lg">
+<span class="text-outline font-label-lg mb-sm block">Calendario</span>
+<h4 class="font-title-lg text-title-lg text-primary mb-md group-hover:text-secondary transition-colors">Calendario de desparasitación anual</h4>
+<p class="text-on-surface-variant text-body-md line-clamp-2">Mantén a tu mascota protegida todo el año siguiendo este esquema de prevención clínica.</p>
+</div>
+</article>
+</div>
+</section>
+<!-- Newsletter / Subscribe Mini Section -->
+<section class="mt-xxl bg-primary p-xl rounded-[32px] text-center text-on-primary">
+<h3 class="font-headline-md text-headline-md mb-md">¿Quieres más consejos personalizados?</h3>
+<p class="font-body-md opacity-80 mb-xl max-w-md mx-auto">Únete a nuestra comunidad y recibe mensualmente los mejores insights para el bienestar de tu mascota.</p>
+<div class="flex flex-col sm:flex-row gap-md max-w-md mx-auto">
+<input class="bg-primary-container border-none rounded-xl px-4 py-3 flex-1 text-on-primary-container placeholder:text-on-primary-container/60 focus:ring-2 focus:ring-on-primary-container" placeholder="Tu email" type="email"/>
+<button class="bg-secondary text-on-secondary px-lg py-3 rounded-xl font-label-lg hover:opacity-90 active:scale-95 transition-all">Suscribirme</button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 glass-nav bg-surface/80 flex justify-around items-center px-lg pb-lg pt-md rounded-t-[32px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform duration-200 hover:bg-surface-variant/50 p-2 rounded-full" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform duration-200 hover:bg-surface-variant/50 p-2 rounded-full" href="#">
+<span class="material-symbols-outlined">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined active-icon">notifications</span>
+<span class="font-label-md text-label-md">Recordatorios</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform duration-200 hover:bg-surface-variant/50 p-2 rounded-full" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Skeleton loader logic (simulated)
+        window.addEventListener('load', () => {
+            // In a real app, we would swap out skeletons for content here
+            console.log('App Loaded');
+        });
+    </script>
+</body></html>

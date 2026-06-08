@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Historial de Vacunación - Gestor de Salud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #faf9f9;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#430f15",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-container": "#7a532a",
+                        "surface-variant": "#e3e2e2",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eeeeed",
+                        "surface-tint": "#436468",
+                        "on-primary-fixed-variant": "#2b4c50",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf9f9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#ffca98",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#00262a",
+                        "inverse-primary": "#aacdd1",
+                        "outline": "#717879",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#723337",
+                        "primary-container": "#1a3c40",
+                        "inverse-on-surface": "#f1f1f0",
+                        "tertiary-container": "#5f2428",
+                        "outline-variant": "#c1c8c9",
+                        "background": "#faf9f9",
+                        "primary-fixed-dim": "#aacdd1",
+                        "on-secondary-fixed-variant": "#623f18",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#c5e9ee",
+                        "secondary": "#7d562d",
+                        "surface-bright": "#faf9f9",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#3b080f",
+                        "on-primary-fixed": "#001f23",
+                        "tertiary-fixed-dim": "#ffb3b5",
+                        "on-background": "#1a1c1c",
+                        "secondary-fixed": "#ffdcbd",
+                        "on-surface-variant": "#414849",
+                        "surface-container-highest": "#e3e2e2",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-tertiary-container": "#dd8a8d",
+                        "tertiary-fixed": "#ffdada",
+                        "on-primary-container": "#84a6ab",
+                        "secondary-fixed-dim": "#f0bd8b",
+                        "surface-container-low": "#f4f3f3",
+                        "surface-dim": "#dadada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "title-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 bg-surface/80 backdrop-blur-md shadow-sm z-50 flex items-center justify-between px-container-margin py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container active:scale-95 transition-transform">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional, clean studio portrait of a friendly male user for a medical application profile. The lighting is soft and high-key, maintaining a bright and trustworthy light-mode aesthetic. The background is a soft, warm ivory tone, consistent with a premium medical and pet care brand identity. The style is modern, refined, and minimalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzVz9_pHkwm4xFxuRHb07q1qup3Zmie9ChQrHJStM-WRcLl30nPcAaBW-4tmYJnz7XFkBnu737jaz58Y0aPB5_2gjhTLM8QwHUm5X0zbX4R0nr7Ydw6xKmup6UhU7hztSwyDIXs8QRwUF8icEIuOUu44-IoMUvlCsEpbaNHYzjgDgJWjdFZXvszz24Yoj_-6TE9C3sS8r3HHQq-pxYzuZsMEELvLlFtJj742ga3xFL2I1gwc7ocVjLBQsWHH4a808pXwvpYGpgCAFJ"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed font-extrabold tracking-tight">Gestor de Salud</h1>
+</div>
+<button class="p-2 text-primary dark:text-primary-fixed hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<!-- Main Content: Empty State Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-container-margin py-xxl animate-in fade-in duration-700">
+<!-- Illustration Container -->
+<div class="relative w-64 h-64 mb-xl flex items-center justify-center">
+<!-- Subtle background pulse -->
+<div class="absolute inset-0 bg-primary/5 rounded-full animate-pulse"></div>
+<div class="relative z-10 w-full h-full bg-white rounded-[40px] shadow-[0px_10px_30px_rgba(26,60,64,0.08)] p-lg flex items-center justify-center overflow-hidden border border-surface-variant/20">
+<img alt="Medical Kit Illustration" class="w-4/5 h-4/5 object-contain" data-alt="A minimalist and elegant 3D-style illustration of a white professional medical kit featuring a soft petrol-green paw print emblem on its front. The setting is clean and airy with soft diffused lighting and long subtle shadows. The aesthetic is premium and medical-grade, using a palette of ivory, white, and deep petrol to evoke trust and high-end pet care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE25r9DcTLeNzbNHvo_YJB2_vPsTcU-CRBVsiKfBz0mj_gop3p2dZkZGFzyKEb74VXOod5voRUb2z6eKYBU3I4AclV45ARxLYo_J9aFTu2OYL_CG3ownaOs_rbSKo14GfT1RxsFoM6fU5PfrhDC8spllFDxq-Cz6NLphRZl7ar6oqFi-ctLf_qfK3PL0nMkVQbuk7KHosvJq0yHngEiObEVG8Y2gw7PGrQKFkXxceegiDkyaIow9FpV6Qr3ePi-8xo4RT4d2AoOR6v"/>
+</div>
+<!-- Floating Decorative Element -->
+<div class="absolute -top-4 -right-4 bg-secondary-fixed text-on-secondary-fixed p-sm rounded-xl shadow-lg animate-bounce duration-[3000ms]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="text-center max-w-sm space-y-md">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-semibold tracking-tight">
+                Aún no hay registros
+            </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                Mantén a tu mascota protegida registrando su primera vacuna hoy mismo.
+            </p>
+</div>
+<!-- Primary Action -->
+<div class="mt-xxl w-full max-w-xs">
+<button class="w-full bg-primary text-on-primary py-md px-xl rounded-[16px] font-title-lg text-title-lg shadow-lg hover:opacity-90 active:scale-95 transition-all duration-200 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">add</span>
+<span>Registrar primera vacuna</span>
+</button>
+<button class="w-full mt-md text-secondary font-label-lg text-label-lg hover:underline transition-all">
+                Ver calendario sugerido
+            </button>
+</div>
+</main>
+<!-- Navigation Spacer -->
+<div class="h-24"></div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg pb-lg pt-md bg-surface/80 dark:bg-surface-container/80 backdrop-blur-[20px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)] rounded-t-[32px]">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<!-- Mascotas (Active context for Vaccination) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1 active-icon">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</a>
+<!-- Recordatorios -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">notifications</span>
+<span class="font-label-md text-label-md">Recordatorios</span>
+</a>
+<!-- Perfil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</a>
+</nav>
+<script>
+        // Simple entry animation for elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.animate-in');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

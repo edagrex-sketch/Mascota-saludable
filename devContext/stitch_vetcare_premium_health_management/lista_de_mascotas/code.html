@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@500;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#430f15",
+                    "on-surface": "#1a1c1c",
+                    "on-secondary-container": "#7a532a",
+                    "surface-variant": "#e3e2e2",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeeed",
+                    "surface-tint": "#436468",
+                    "on-primary-fixed-variant": "#2b4c50",
+                    "error-container": "#ffdad6",
+                    "surface": "#faf9f9",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2f3131",
+                    "secondary-container": "#ffca98",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#00262a",
+                    "inverse-primary": "#aacdd1",
+                    "outline": "#717879",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#723337",
+                    "primary-container": "#1a3c40",
+                    "inverse-on-surface": "#f1f1f0",
+                    "tertiary-container": "#5f2428",
+                    "outline-variant": "#c1c8c9",
+                    "background": "#faf9f9",
+                    "primary-fixed-dim": "#aacdd1",
+                    "on-secondary-fixed-variant": "#623f18",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#c5e9ee",
+                    "secondary": "#7d562d",
+                    "surface-bright": "#faf9f9",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed": "#3b080f",
+                    "on-primary-fixed": "#001f23",
+                    "tertiary-fixed-dim": "#ffb3b5",
+                    "on-background": "#1a1c1c",
+                    "secondary-fixed": "#ffdcbd",
+                    "on-surface-variant": "#414849",
+                    "surface-container-highest": "#e3e2e2",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#2c1600",
+                    "on-tertiary-container": "#dd8a8d",
+                    "tertiary-fixed": "#ffdada",
+                    "on-primary-container": "#84a6ab",
+                    "secondary-fixed-dim": "#f0bd8b",
+                    "surface-container-low": "#f4f3f3",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "xxl": "48px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "display-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Outfit"],
+                    "headline-lg-mobile": ["Outfit"],
+                    "title-lg": ["Outfit"]
+            },
+            "fontSize": {
+                    "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf9f9;
+            color: #1a1c1c;
+            -webkit-font-smoothing: antialiased;
+        }
+        .premium-card-shadow {
+            box-shadow: 0px 4px 20px rgba(26, 60, 64, 0.04);
+        }
+        .premium-card-shadow:active {
+            box-shadow: 0px 2px 10px rgba(26, 60, 64, 0.02);
+            transform: scale(0.98);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e3e2e2;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md overflow-hidden">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md shadow-sm flex items-center justify-between px-container-margin py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden">
+<img alt="User" data-alt="A professional studio portrait of a friendly Hispanic woman in her 30s with a warm smile, wearing professional business casual attire. The lighting is soft and natural, with a clean ivory background that matches a medical-premium aesthetic. The overall mood is trustworthy and caring, representing a high-end health app user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0FpkZ56bz0CY3rHY1BmfSeRsjv-AxfadNDKE9V89WIg59RKbPnBcsthpbw9P6bh3oR0MbAbZf74zbHSfnyajQatuaLaXOr-DpJhxqLYK1kQGqAo3ldG1QIswW25UTy7ziE3g_c_VaVGCEB8IFv1Hdm2RScq_xj2XLGu1mIwGReZYpiwFscttFlgjlC7KMiLUIMb3xT1k04PAU2dzjMjypxSsIy9rsPRWLR00-kwl5v5VwCg4Y3DPEuG0eOlo2N4QDrXc1SZR6D29E"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Gestor de Salud</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-container-margin pt-lg pb-xxl custom-scrollbar">
+<header class="mb-xl">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Tus Mascotas</h2>
+<p class="text-on-surface-variant mt-xs">Gestiona el bienestar de tus compañeros</p>
+</header>
+<!-- Search & Filter Bar -->
+<div class="mb-xl relative group">
+<div class="absolute inset-y-0 left-md flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full h-12 bg-[#F2F2F2] border-none rounded-xl pl-11 pr-md focus:ring-2 focus:ring-primary transition-all text-on-surface placeholder:text-outline-variant" placeholder="Buscar por nombre o raza..." type="text"/>
+</div>
+<!-- Pets List / Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg" id="pets-container">
+<!-- Card 1: Luna -->
+<div class="bg-white rounded-[24px] p-lg premium-card-shadow flex flex-col gap-md transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img class="w-16 h-16 rounded-2xl object-cover" data-alt="A high-resolution, close-up photograph of a beautiful Golden Retriever dog with a gentle expression. The lighting is soft and warm, capturing the fine texture of its golden fur against a blurred, minimalist light-grey background. The aesthetic is clean and professional, typical of a high-end pet care application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR5wYfSPJhtl_HYXq_Y90021sV0WZjUql5X-vFqqcXjsrjZ1pQdpknsQ6LQcKpwPgnkRZboX4H8ecaXpkSX8BT609DkG_YfG12uDYjqbXq0uVDc-1293GSztUAkDUz0w-W8GIh_j6E1aTzEKtWMzDt0Ik9_ohPisYP9mww05g2-fSP9qISImaVwzmFdL35d4XDf84BCR0ff3EEZXyxBg-fzF9UjVFeXIA2TFU3SSOxEpfLSB4JghXI6S3zqfR1aA-JNMLtKJYKyJgm"/>
+<div class="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-primary">Luna</h3>
+<span class="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-full font-semibold border border-green-100 uppercase tracking-wider">Saludable</span>
+</div>
+<p class="text-on-surface-variant">Golden Retriever</p>
+<p class="text-label-lg text-on-surface-variant/70">4 años</p>
+</div>
+</div>
+<div class="flex gap-sm mt-xs">
+<div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-label-md text-on-surface-variant">
+<span>Próxima vacuna</span>
+<span class="font-semibold text-primary">En 12 días</span>
+</div>
+</div>
+<!-- Card 2: Oliver -->
+<div class="bg-white rounded-[24px] p-lg premium-card-shadow flex flex-col gap-md transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img class="w-16 h-16 rounded-2xl object-cover" data-alt="A professional studio photograph of a sleek grey British Shorthair cat with bright orange eyes. The composition is clean and centered, with soft diffused studio lighting that creates a sophisticated atmosphere. The background is a muted, warm off-white, emphasizing a clinical yet premium pet health care vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_krkGEJVpTU0IhZdkmF4B6f0XRt0lt6Le2AHFwy9ntYwcLRG_ODCoqkylbhW4YSafDqrkiw4YhgP5y-b1Q1uAPRZCxQw5HScAXcXauCV-expvzAgVpNx1Z77SvXopWrOACNX5iPeiUcxIJoSFhGoz2Xu5XqtnGyrUy73dOiKhexzqd27kbB4tqChTI4n4msg5nGmW4S0Oyxp677jhE7PQIFO6a8fNdx8u4uN8aUMcefgo3z_w743CY8kMA_uD_NDB2E2dC08y4pSA"/>
+<div class="absolute -top-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-primary">Oliver</h3>
+<span class="text-xs px-2 py-1 bg-error-container text-on-error-container rounded-full font-semibold border border-red-100 uppercase tracking-wider">Revisión pendiente</span>
+</div>
+<p class="text-on-surface-variant">Siamés</p>
+<p class="text-label-lg text-on-surface-variant/70">2 años</p>
+</div>
+</div>
+<div class="flex gap-sm mt-xs">
+<div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[40%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-label-md text-on-surface-variant">
+<span>Chequeo anual</span>
+<span class="font-semibold text-secondary">¡Urgente!</span>
+</div>
+</div>
+<!-- Card 3: Max -->
+<div class="bg-white rounded-[24px] p-lg premium-card-shadow flex flex-col gap-md transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img class="w-16 h-16 rounded-2xl object-cover" data-alt="A high-quality portrait of a small French Bulldog with an adorable expression. The photo is taken in a brightly lit, modern apartment setting with soft shadows and a focused, narrow depth of field. The lighting highlights the dog's soft features against a minimalist, ivory-toned background, maintaining the app's professional and clean design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Z9HGlOLlVflgGe-y2ReQGnFJZX1B1CXnU4AU7C6qReKQ4Ss7HiEVm0-UC77VtKjO45UzpPYRj6Zmem-fd0ZkED4cuScBhJIC32LItSWN06c72w7zMmfjJrhstDORsckwpp_iCpcNNWqO4F6G5cGXnZTxVzlz8baEqBvZsmyfw_1DkVviei4iA-qUmx4Az2Od7sj0kZPCITi87jqPgIlVeM3iqthAMZ2GoosAJQInj2-0Te51uuSyuaPG5xz-uWAek2JPmNEcfPAr"/>
+<div class="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-primary">Max</h3>
+<span class="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-full font-semibold border border-green-100 uppercase tracking-wider">Saludable</span>
+</div>
+<p class="text-on-surface-variant">Bulldog Francés</p>
+<p class="text-label-lg text-on-surface-variant/70">6 meses</p>
+</div>
+</div>
+<div class="flex gap-sm mt-xs">
+<div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[95%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-label-md text-on-surface-variant">
+<span>Desparasitación</span>
+<span class="font-semibold text-primary">Completado</span>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default, used when pet count is 0) -->
+<div class="hidden flex-col items-center justify-center py-xxl text-center max-w-sm mx-auto" id="empty-state">
+<div class="w-64 h-64 mb-lg relative">
+<div class="absolute inset-0 bg-secondary-container/20 rounded-full blur-3xl"></div>
+<img class="relative z-10 w-full h-full object-contain mix-blend-multiply" data-alt="A delightful, high-end illustration of a friendly dog and cat sitting together in a modern, minimalist room. The art style is clean and sophisticated with soft, organic shapes and a muted palette of petrol, gold, and ivory. Soft morning light enters from a side window, creating a serene and inviting atmosphere that evokes feelings of family and companionship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBozdwxq4RDdc_iPhvDsxkQDKtGqLWLJanwL3S9PWZxLVpKxuLnyh0Uwa69ZyhRyggeHl2oVaVGBSHkYzcoBQd2JanEZY7PwWOwwmbMVE1yTEpejC7H-AY3RYlMYcBFLqR8qEt1xjWpvDRLuWfaaFXjIYBsF13s-pFFKDUktOhMbpz8g6kskIK8f5_PUdcXQDdOsXm4rfzVbsu_X20g9lB6Nl8eFcy6X5rI914YoGXGRldQAb66fnQV8v5CobiRALxKl7n6y6ZmXXvs"/>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary mb-sm">Tu familia empieza aquí</h3>
+<p class="text-on-surface-variant mb-xl">Añade a tu primera mascota para empezar a gestionar su salud de forma profesional.</p>
+<button class="bg-primary text-white px-xl py-md rounded-2xl font-semibold premium-card-shadow active:scale-95 transition-all">
+                Añadir Mascota
+            </button>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-32 right-container-margin w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center active:scale-90 transition-transform z-50" id="fab-add">
+<span class="material-symbols-outlined !text-3xl">add</span>
+</button>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg pb-lg pt-md glass-nav bg-surface/80 rounded-t-[32px] shadow-[0px_-4px_20px_rgba(26,60,64,0.04)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-xl cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform active:scale-90">
+<span class="material-symbols-outlined active-icon">pets</span>
+<span class="font-label-md text-label-md">Mascotas</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-xl cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Recordatorios</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-xl cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Perfil</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for search bar focus
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+
+        // FAB interaction
+        const fab = document.getElementById('fab-add');
+        fab.addEventListener('click', () => {
+            // Ripple effect or navigate to add pet screen
+            console.log('Navegando a Añadir Mascota...');
+        });
+
+        // Toggle empty state for demo purposes (Trigger via console: toggleEmptyState())
+        function toggleEmptyState() {
+            const container = document.getElementById('pets-container');
+            const empty = document.getElementById('empty-state');
+            const fab = document.getElementById('fab-add');
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                empty.classList.add('hidden');
+                fab.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+                empty.classList.remove('hidden');
+                fab.classList.add('hidden'); // FAB suppression on focused/empty states as per guidelines
+            }
+        }
+    </script>
+</body></html>
