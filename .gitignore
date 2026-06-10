@@ -1,2 +1,36 @@
+# Miscellaneous
 opencode.json
 *.docx
+skills-lock.json
+
+# Flutter
+.dart_tool/
+build/
+*.iml
+.idea/
+.vscode/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# Android
+**/android/.gradle/
+**/android/app/build/
+**/android/local.properties
+
+# iOS
+**/ios/Pods/
+**/ios/.symlinks/
+
+# macOS
+**/macos/Pods/
+**/macos/.symlinks/
+
+# Linux
+**/linux/flutter/ephemeral/
+
+# Web
+**/web/build/
+
+# Agent artifacts
+.agents/

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/routes/app_router.dart';
+import '../../../../core/services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,14 +16,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateAfterDelay();
+    _checkSession();
   }
 
-  Future<void> _navigateAfterDelay() async {
+  Future<void> _checkSession() async {
+    // Brief delay so the splash screen is visible.
     await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      context.go(AppRoutes.login);
-    }
+
+    if (!mounted) return;
+
+    final isLoggedIn = AuthService().isAuthenticated;
+    final destination = isLoggedIn ? AppRoutes.home : AppRoutes.login;
+
+    context.go(destination);
   }
 
   @override

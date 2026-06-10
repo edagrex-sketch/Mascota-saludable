@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/services/auth_service.dart';
+import '../../../../core/routes/app_router.dart';
 import '../../../../shared/widgets/app_card.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,6 +11,10 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = AuthService().currentUser;
+    final displayName = user?.email ?? 'Usuario';
+    final email = user?.email ?? 'Sin sesión';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,14 +44,14 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Javier Martínez',
+                  displayName,
                   style: AppTypography.headlineMd.copyWith(
                     color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'javier@email.com',
+                  email,
                   style: AppTypography.bodyMd.copyWith(
                     color: AppColors.onSurfaceVariant,
                   ),
@@ -75,9 +82,67 @@ class ProfileScreen extends StatelessWidget {
             subtitle: 'Versión 1.0.0',
             onTap: () {},
           ),
+          const SizedBox(height: 24),
+
+          // Logout button
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton.icon(
+              onPressed: () => _logout(context),
+              icon: const Icon(Icons.logout, size: 20),
+              label: const Text('Cerrar Sesión'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.errorContainer,
+                foregroundColor: AppColors.onErrorContainer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 0,
+                textStyle: AppTypography.titleLg,
+              ),
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> _logout(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        title: const Text('Cerrar Sesión'),
+        content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              foregroundColor: AppColors.onError,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text('Cerrar Sesión'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await AuthService().signOut();
+      if (context.mounted) {
+        context.go(AppRoutes.login);
+      }
+    }
   }
 }
 
