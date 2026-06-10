@@ -5,8 +5,10 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/pets/presentation/screens/pet_list_screen.dart';
 import '../../features/pets/presentation/screens/pet_detail_screen.dart';
+import '../../features/pets/presentation/screens/add_pet_screen.dart';
 import '../../features/vaccinations/presentation/screens/vaccination_status_screen.dart';
 import '../../features/vaccinations/presentation/screens/vaccine_history_screen.dart';
+import '../../features/vaccinations/presentation/screens/register_vaccine_screen.dart';
 import '../../features/medical_visits/presentation/screens/visits_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -20,8 +22,10 @@ abstract class AppRoutes {
   static const home = '/home';
   static const pets = '/pets';
   static const petDetail = '/pets/:id';
+  static const addPet = '/pets/add';
   static const vaccinations = '/vaccinations';
   static const vaccineHistory = '/vaccinations/history';
+  static const registerVaccine = '/vaccinations/register';
   static const visits = '/visits';
   static const notifications = '/notifications';
   static const profile = '/profile';
@@ -72,6 +76,14 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.profile,
       builder: (_, state) => const ProfileScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.addPet,
+      builder: (_, state) => const AddPetScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.registerVaccine,
+      builder: (_, state) => const RegisterVaccineScreen(),
     ),
     ShellRoute(
       builder: (_, state, child) => AppBottomNav(child: child),
