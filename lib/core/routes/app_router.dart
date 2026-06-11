@@ -5,8 +5,10 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/pets/presentation/screens/pet_list_screen.dart';
 import '../../features/pets/presentation/screens/pet_detail_screen.dart';
+import '../../features/pets/presentation/screens/add_pet_screen.dart';
 import '../../features/vaccinations/presentation/screens/vaccination_status_screen.dart';
 import '../../features/vaccinations/presentation/screens/vaccine_history_screen.dart';
+import '../../features/vaccinations/presentation/screens/register_vaccine_screen.dart';
 import '../../features/medical_visits/presentation/screens/visits_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -20,8 +22,10 @@ abstract class AppRoutes {
   static const home = '/home';
   static const pets = '/pets';
   static const petDetail = '/pets/:id';
+  static const addPet = '/pets/add';
   static const vaccinations = '/vaccinations';
   static const vaccineHistory = '/vaccinations/history';
+  static const registerVaccine = '/vaccinations/register';
   static const visits = '/visits';
   static const notifications = '/notifications';
   static const profile = '/profile';
@@ -35,6 +39,7 @@ final _protectedRoutes = <String>{
   AppRoutes.profile,
   AppRoutes.vaccinations,
   AppRoutes.vaccineHistory,
+  AppRoutes.registerVaccine,
   AppRoutes.visits,
 };
 
@@ -70,8 +75,22 @@ final goRouter = GoRouter(
       builder: (_, state) => const VisitsScreen(),
     ),
     GoRoute(
-      path: AppRoutes.profile,
-      builder: (_, state) => const ProfileScreen(),
+      path: AppRoutes.addPet,
+      builder: (_, state) => const AddPetScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.registerVaccine,
+      builder: (_, state) => RegisterVaccineScreen(
+        initialPetId: state.extra as String?,
+      ),
+    ),
+    // Pet detail is outside ShellRoute so it renders as a full-screen page
+    // without the bottom navigation bar (matching the design intent).
+    GoRoute(
+      path: AppRoutes.petDetail,
+      builder: (_, state) => PetDetailScreen(
+        petId: state.pathParameters['id'] ?? '',
+      ),
     ),
     ShellRoute(
       builder: (_, state, child) => AppBottomNav(child: child),
@@ -87,19 +106,17 @@ final goRouter = GoRouter(
           pageBuilder: (_, state) => const NoTransitionPage(
             child: PetListScreen(),
           ),
-          routes: [
-            GoRoute(
-              path: ':id',
-              builder: (_, state) => PetDetailScreen(
-                petId: state.pathParameters['id'] ?? '',
-              ),
-            ),
-          ],
         ),
         GoRoute(
           path: AppRoutes.notifications,
           pageBuilder: (_, state) => const NoTransitionPage(
             child: NotificationsScreen(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.profile,
+          pageBuilder: (_, state) => const NoTransitionPage(
+            child: ProfileScreen(),
           ),
         ),
       ],
