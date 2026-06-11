@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Service for uploading pet profile photos to Supabase Storage.
@@ -17,17 +18,46 @@ class StorageService {
     required String petId,
     required File file,
   }) async {
+    final bytes = await file.readAsBytes();
+    final ext = file.path.split('.').last.toLowerCase();
+    return _uploadBytes(petId: petId, bytes: bytes, ext: ext);
+  }
+
+  /// Upload a pet photo from raw bytes and return the public URL.
+  Future<String> uploadPetPhotoBytes({
+    required String petId,
+    required Uint8List bytes,
+    required String fileName,
+  }) async {
+    final ext = fileName.contains('.')
+        ? fileName.split('.').last.toLowerCase()
+        : 'jpg';
+    return _uploadBytes(petId: petId, bytes: bytes, ext: ext);
+  }
+
+  Future<String> _uploadBytes({
+    required String petId,
+    required Uint8List bytes,
+    required String ext,
+  }) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) throw Exception('Usuario no autenticado');
 
-    final ext = file.path.split('.').last.toLowerCase();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final path = '$userId/${petId}_$timestamp.$ext';
 
-    await _client.storage.from(_bucket).upload(path, file);
-
-    // Return the public URL of the uploaded file
-    return _client.storage.from(_bucket).getPublicUrl(path);
+    final tempFile = File(
+      '${Directory.systemTemp.path}/pet_upload_$timestamp.$ext',
+    );
+    try {
+      await tempFile.writeAsBytes(bytes);
+      await _client.storage.from(_bucket).upload(path, tempFile);
+      return _client.storage.from(_bucket).getPublicUrl(path);
+    } finally {
+      try {
+        if (tempFile.existsSync()) tempFile.deleteSync();
+      } catch (_) {}
+    }
   }
 
   /// Upload a vaccine certificate photo and return the public URL.

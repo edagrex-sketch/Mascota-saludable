@@ -1,0 +1,20 @@
+Launching lib/main.dart on Linux in debug mode...
+Building Linux application...                                   
+✓ Built build/linux/x64/debug/bundle/mascota_saludable
+
+(com.mascotasaludable.mascota_saludable:13741): Atk-CRITICAL **: 10:26:16.950: atk_socket_embed: assertion 'plug_id != NULL' failed
+Gdk-Message: 10:26:17.180: Unable to load  from the cursor theme
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+Syncing files to device Linux...                                    65ms
+
+Flutter run key commands.
+r Hot reload. 🔥🔥🔥
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen
+q Quit (terminate the application on the device).
+
+A Dart VM Service on Linux is available at: http://127.0.0.1:44263/tdZ6DSfOZ74=/
+The Flutter DevTools debugger and profiler on Linux is available at: http://127.0.0.1:44263/tdZ6DSfOZ74=/devtools/?uri=ws://127.0.0.1:44263/tdZ6DSfOZ74=/ws
+Lost connection to device.
