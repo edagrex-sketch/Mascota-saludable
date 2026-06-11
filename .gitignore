@@ -28,6 +28,13 @@ build/
 
 # Linux
 **/linux/flutter/ephemeral/
+**/linux/flutter/generated_*
+
+# macOS
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows
+**/windows/flutter/generated_*
 
 # Web
 **/web/build/

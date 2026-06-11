@@ -61,6 +61,10 @@ class ErrorHandler {
       return 'Ingresa un correo electrónico válido.';
     }
 
+    if (message.contains('bucket not found')) {
+      return 'El bucket de almacenamiento no existe. Contacta al administrador.';
+    }
+
     // Fallback for unknown errors
     return 'Ocurrió un error inesperado. Intenta de nuevo más tarde.';
   }
