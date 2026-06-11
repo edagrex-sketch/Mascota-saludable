@@ -39,6 +39,7 @@ final _protectedRoutes = <String>{
   AppRoutes.profile,
   AppRoutes.vaccinations,
   AppRoutes.vaccineHistory,
+  AppRoutes.registerVaccine,
   AppRoutes.visits,
 };
 
@@ -74,16 +75,22 @@ final goRouter = GoRouter(
       builder: (_, state) => const VisitsScreen(),
     ),
     GoRoute(
-      path: AppRoutes.profile,
-      builder: (_, state) => const ProfileScreen(),
-    ),
-    GoRoute(
       path: AppRoutes.addPet,
       builder: (_, state) => const AddPetScreen(),
     ),
     GoRoute(
       path: AppRoutes.registerVaccine,
-      builder: (_, state) => const RegisterVaccineScreen(),
+      builder: (_, state) => RegisterVaccineScreen(
+        initialPetId: state.extra as String?,
+      ),
+    ),
+    // Pet detail is outside ShellRoute so it renders as a full-screen page
+    // without the bottom navigation bar (matching the design intent).
+    GoRoute(
+      path: AppRoutes.petDetail,
+      builder: (_, state) => PetDetailScreen(
+        petId: state.pathParameters['id'] ?? '',
+      ),
     ),
     ShellRoute(
       builder: (_, state, child) => AppBottomNav(child: child),
@@ -99,19 +106,17 @@ final goRouter = GoRouter(
           pageBuilder: (_, state) => const NoTransitionPage(
             child: PetListScreen(),
           ),
-          routes: [
-            GoRoute(
-              path: ':id',
-              builder: (_, state) => PetDetailScreen(
-                petId: state.pathParameters['id'] ?? '',
-              ),
-            ),
-          ],
         ),
         GoRoute(
           path: AppRoutes.notifications,
           pageBuilder: (_, state) => const NoTransitionPage(
             child: NotificationsScreen(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.profile,
+          pageBuilder: (_, state) => const NoTransitionPage(
+            child: ProfileScreen(),
           ),
         ),
       ],

@@ -410,13 +410,28 @@ class _PetCard extends StatelessWidget {
                             : AppColors.errorContainer.withAlpha(40),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Icon(
-                        Icons.pets,
-                        size: 32,
-                        color: isHealthy
-                            ? AppColors.primaryContainer
-                            : AppColors.error,
-                      ),
+                      child: pet.photoUrl != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                pet.photoUrl!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, _, _) => Icon(
+                                  Icons.pets,
+                                  size: 32,
+                                  color: isHealthy
+                                      ? AppColors.primaryContainer
+                                      : AppColors.error,
+                                ),
+                              ),
+                            )
+                          : Icon(
+                              Icons.pets,
+                              size: 32,
+                              color: isHealthy
+                                  ? AppColors.primaryContainer
+                                  : AppColors.error,
+                            ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(

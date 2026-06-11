@@ -154,7 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                   index: index,
                                   staggerCtrl: _staggerCtrl,
                                   onTap: () =>
-                                      context.go('${AppRoutes.pets}/${pet.id}'),
+                                      context.push('${AppRoutes.pets}/${pet.id}'),
                                 );
                               }).toList(),
                             ),
@@ -402,10 +402,13 @@ class _DashboardScreenState extends State<DashboardScreen>
                     const Icon(Icons.location_on,
                         size: 14, color: AppColors.onSurfaceVariant),
                     const SizedBox(width: 4),
-                    Text(
-                      'Clínica Veterinaria Central',
-                      style: AppTypography.bodyMd.copyWith(
-                        color: AppColors.onSurfaceVariant,
+                    Flexible(
+                      child: Text(
+                        'Clínica Veterinaria Central',
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.bodyMd.copyWith(
+                          color: AppColors.onSurfaceVariant,
+                        ),
                       ),
                     ),
                   ],
@@ -482,7 +485,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () => context.push(AppRoutes.addPet),
+              onPressed: () => context.push(AppRoutes.addPet).then((_) => _loadData()),
               icon: const Icon(Icons.add),
               label: const Text('Añadir Mascota'),
               style: ElevatedButton.styleFrom(
@@ -647,13 +650,28 @@ class _AnimatedPetCard extends StatelessWidget {
                         : AppColors.errorContainer.withAlpha(40),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Icon(
-                    Icons.pets,
-                    size: 36,
-                    color: isHealthy
-                        ? AppColors.primaryContainer
-                        : AppColors.error,
-                  ),
+                  child: pet.photoUrl != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            pet.photoUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => Icon(
+                              Icons.pets,
+                              size: 36,
+                              color: isHealthy
+                                  ? AppColors.primaryContainer
+                                  : AppColors.error,
+                            ),
+                          ),
+                        )
+                      : Icon(
+                          Icons.pets,
+                          size: 36,
+                          color: isHealthy
+                              ? AppColors.primaryContainer
+                              : AppColors.error,
+                        ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(

@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/models/pet_model.dart';
 import '../../../../core/models/vaccine_model.dart';
 import '../../../../core/services/pet_service.dart';
+import '../../../../core/services/storage_service.dart';
 import '../../../../core/services/vaccine_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -22,10 +25,13 @@ class _PetDetailScreenState extends State<PetDetailScreen>
     with SingleTickerProviderStateMixin {
   final _petService = PetService();
   final _vaccineService = VaccineService();
+  final _storageService = StorageService();
+  final _picker = ImagePicker();
 
   PetModel? _pet;
   List<VaccineModel> _vaccines = [];
   bool _loading = true;
+  bool _uploadingPhoto = false;
   String? _error;
   int _selectedTab = 0;
 
@@ -76,58 +82,251 @@ class _PetDetailScreenState extends State<PetDetailScreen>
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (_loading) return _buildLoading();
-    if (_error != null && _pet == null) return _buildError();
-
-    return Scaffold(
-      body: _pet == null
-          ? _buildError()
-          : CustomScrollView(
-              slivers: [
-                // Hero header
-                SliverAppBar(
-                  expandedHeight: 400,
-                  pinned: true,
-                  backgroundColor: AppColors.surface,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    color: Colors.white,
-                    onPressed: () => context.pop(),
-                  ),
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: _buildHeroHeader(),
-                  ),
+  void _showPhotoOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.outlineVariant,
+                  borderRadius: BorderRadius.circular(999),
                 ),
-                // Tabs
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _TabBarDelegate(
-                    tabs: ['Resumen', 'Vacunas', 'Consultas'],
-                    selectedTab: _selectedTab,
-                    onTabChanged: (index) {
-                      setState(() => _selectedTab = index);
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Foto de Perfil',
+                style: AppTypography.titleLg.copyWith(
+                  color: AppColors.primary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Actualiza la foto de ${_pet?.name ?? 'tu mascota'}',
+                style: AppTypography.bodyMd.copyWith(
+                  color: AppColors.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: _BottomSheetPhotoOption(
+                      icon: Icons.camera_alt,
+                      label: 'Cámara',
+                      onTap: () {
+                        Navigator.pop(ctx);
+                        _pickImage(ImageSource.camera);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _BottomSheetPhotoOption(
+                      icon: Icons.photo_library,
+                      label: 'Galería',
+                      onTap: () {
+                        Navigator.pop(ctx);
+                        _pickImage(ImageSource.gallery);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              if (_pet?.photoUrl != null || _pet?.photoUrl?.isNotEmpty == true) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                      _deletePhoto();
                     },
-                  ),
-                ),
-                // Content
-                SliverFillRemaining(
-                  child: FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 350),
-                      child: _buildTabContent(_selectedTab),
+                    icon: const Icon(Icons.delete_outline, size: 18),
+                    label: const Text('Eliminar foto'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.error,
+                      side: const BorderSide(color: AppColors.error),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
               ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final xFile = await _picker.pickImage(
+        source: source,
+        maxWidth: 1024,
+        maxHeight: 1024,
+        imageQuality: 85,
+      );
+      if (xFile != null) {
+        await _updatePetPhoto(File(xFile.path));
+      }
+    } catch (e) {
+      if (mounted) {
+        ErrorHandler.showSnackBar(context, 'No se pudo acceder a la cámara/galería');
+      }
+    }
+  }
+
+  Future<void> _updatePetPhoto(File file) async {
+    final pet = _pet;
+    if (pet == null) return;
+
+    setState(() => _uploadingPhoto = true);
+
+    try {
+      // Upload new photo first (so we don't lose the old one if upload fails)
+      final newUrl = await _storageService.uploadPetPhoto(
+        petId: pet.id,
+        file: file,
+      );
+
+      // Delete old photo if it exists (new photo is already uploaded)
+      if (pet.photoUrl != null) {
+        await _storageService.deletePhoto(pet.photoUrl!);
+      }
+
+      // Update pet record in DB
+      final updatedPet = pet.copyWith(photoUrl: newUrl);
+      final savedPet = await _petService.updatePet(updatedPet);
+
+      if (!mounted) return;
+      setState(() {
+        _pet = savedPet;
+        _uploadingPhoto = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white, size: 18),
+              SizedBox(width: 8),
+              Text('Foto actualizada correctamente'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          backgroundColor: const Color(0xFF2E7D32),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _uploadingPhoto = false);
+      ErrorHandler.showSnackBar(context, e);
+    }
+  }
+
+  Future<void> _deletePhoto() async {
+    final pet = _pet;
+    if (pet?.photoUrl == null) return;
+
+    setState(() => _uploadingPhoto = true);
+
+    try {
+      await _storageService.deletePhoto(pet!.photoUrl!);
+
+      final updatedPet = pet.copyWith(photoUrl: null);
+      final savedPet = await _petService.updatePet(updatedPet);
+
+      if (!mounted) return;
+      setState(() {
+        _pet = savedPet;
+        _uploadingPhoto = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white, size: 18),
+              SizedBox(width: 8),
+              Text('Foto eliminada'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          backgroundColor: const Color(0xFF2E7D32),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _uploadingPhoto = false);
+      ErrorHandler.showSnackBar(context, e);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) return _buildLoading();
+    if (_pet == null) return _buildError();
+
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            expandedHeight: 448,
+            pinned: true,
+            backgroundColor: AppColors.surface,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.white,
+              onPressed: () => context.pop(),
             ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: _buildHeroHeader(),
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: _buildTabBar(),
+            ),
+          ),
+        ],
+        body: FadeTransition(
+          opacity: _fadeAnimation,
+          child: IndexedStack(
+            index: _selectedTab,
+            children: [
+              _buildResumenTab(),
+              _buildVacunasTab(),
+              _buildConsultasTab(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildHeroHeader() {
-    final pet = _pet!;
+    final pet = _pet;
+    if (pet == null) return const SizedBox.shrink();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -164,17 +363,88 @@ class _PetDetailScreenState extends State<PetDetailScreen>
                 // Pet avatar + name
                 Row(
                   children: [
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(30),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Icon(
-                        Icons.pets,
-                        size: 36,
-                        color: Colors.white,
+                    // Editable photo
+                    GestureDetector(
+                      onTap: _showPhotoOptions,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 72,
+                            height: 72,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(30),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: pet.photoUrl != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      pet.photoUrl!,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (_, _, _) => const Icon(
+                                        Icons.pets,
+                                        size: 36,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.pets,
+                                    size: 36,
+                                    color: Colors.white,
+                                  ),
+                          ),
+                          // Camera overlay
+                          Container(
+                            width: 72,
+                            height: 72,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withAlpha(0),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                width: 28,
+                                height: 28,
+                                margin: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Uploading overlay
+                          if (_uploadingPhoto)
+                            Container(
+                              width: 72,
+                              height: 72,
+                              decoration: BoxDecoration(
+                                color: Colors.black.withAlpha(80),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: const Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -221,21 +491,9 @@ class _PetDetailScreenState extends State<PetDetailScreen>
     );
   }
 
-  Widget _buildTabContent(int tab) {
-    switch (tab) {
-      case 0:
-        return _buildResumenTab();
-      case 1:
-        return _buildVacunasTab();
-      case 2:
-        return _buildConsultasTab();
-      default:
-        return const SizedBox();
-    }
-  }
-
   Widget _buildResumenTab() {
-    final pet = _pet!;
+    final pet = _pet;
+    if (pet == null) return const SizedBox.shrink();
     return ListView(
       key: const ValueKey('resumen'),
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 100),
@@ -273,7 +531,10 @@ class _PetDetailScreenState extends State<PetDetailScreen>
               child: _ActionButton(
                 icon: Icons.vaccines,
                 label: 'Registrar Vacuna',
-                onTap: () => context.push(AppRoutes.registerVaccine),
+                onTap: () => context.push(
+                  AppRoutes.registerVaccine,
+                  extra: widget.petId,
+                ).then((_) => _loadData()),
               ),
             ),
             const SizedBox(width: 12),
@@ -315,13 +576,18 @@ class _PetDetailScreenState extends State<PetDetailScreen>
             icon: Icons.vaccines,
             title: 'Sin vacunas registradas',
             subtitle: 'Registra la primera vacuna de ${pet.name}',
-            onAction: () => context.push(AppRoutes.registerVaccine),
+            onAction: () => context.push(
+              AppRoutes.registerVaccine,
+              extra: widget.petId,
+            ).then((_) => _loadData()),
           ),
       ],
     );
   }
 
   Widget _buildVacunasTab() {
+    final pet = _pet;
+    if (pet == null) return const SizedBox.shrink();
     return ListView(
       key: const ValueKey('vacunas'),
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 100),
@@ -334,7 +600,10 @@ class _PetDetailScreenState extends State<PetDetailScreen>
               style: AppTypography.titleLg.copyWith(color: AppColors.primary),
             ),
             TextButton.icon(
-              onPressed: () => context.push(AppRoutes.registerVaccine),
+              onPressed: () => context.push(
+                AppRoutes.registerVaccine,
+                extra: widget.petId,
+              ).then((_) => _loadData()),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('Nueva'),
             ),
@@ -347,7 +616,10 @@ class _PetDetailScreenState extends State<PetDetailScreen>
             title: 'Aún no hay registros',
             subtitle:
                 'Mantén a tu mascota protegida registrando su primera vacuna hoy mismo.',
-            onAction: () => context.push(AppRoutes.registerVaccine),
+            onAction: () => context.push(
+              AppRoutes.registerVaccine,
+              extra: widget.petId,
+            ).then((_) => _loadData()),
           )
         else
           ..._vaccines.map((v) => _VaccineTimelineItem(
@@ -359,6 +631,8 @@ class _PetDetailScreenState extends State<PetDetailScreen>
   }
 
   Widget _buildConsultasTab() {
+    final pet = _pet;
+    if (pet == null) return const SizedBox.shrink();
     return ListView(
       key: const ValueKey('consultas'),
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 100),
@@ -479,6 +753,47 @@ class _PetDetailScreenState extends State<PetDetailScreen>
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    const tabs = ['Resumen', 'Vacunas', 'Consultas'];
+    return Container(
+      color: AppColors.surface,
+      child: Row(
+        children: List.generate(tabs.length, (index) {
+          final isSelected = index == _selectedTab;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _selectedTab = index),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isSelected
+                          ? AppColors.primary
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 250),
+                  style: AppTypography.labelLg.copyWith(
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.onSurfaceVariant,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  ),
+                  child: Text(tabs[index], textAlign: TextAlign.center),
+                ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -788,66 +1103,56 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _TabBarDelegate extends SliverPersistentHeaderDelegate {
-  final List<String> tabs;
-  final int selectedTab;
-  final ValueChanged<int> onTabChanged;
+// ──────────────────────────────────────────────────────────────
+// Photo option widget for bottom sheet
+// ──────────────────────────────────────────────────────────────
 
-  _TabBarDelegate({
-    required this.tabs,
-    required this.selectedTab,
-    required this.onTabChanged,
+class _BottomSheetPhotoOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _BottomSheetPhotoOption({
+    required this.icon,
+    required this.label,
+    required this.onTap,
   });
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: AppColors.surface,
-      child: Row(
-        children: List.generate(tabs.length, (index) {
-          final isSelected = index == selectedTab;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () => onTabChanged(index),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: isSelected
-                          ? AppColors.primary
-                          : Colors.transparent,
-                      width: 2,
-                    ),
-                  ),
-                ),
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 250),
-                  style: AppTypography.labelLg.copyWith(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.onSurfaceVariant,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                  child: Text(tabs[index], textAlign: TextAlign.center),
-                ),
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: AppColors.outlineVariant.withAlpha(50),
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withAlpha(13),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(icon, color: AppColors.primary, size: 24),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: AppTypography.labelLg.copyWith(
+                color: AppColors.onSurface,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          );
-        }),
+          ],
+        ),
       ),
     );
   }
-
-  @override
-  double get maxExtent => 52;
-
-  @override
-  double get minExtent => 52;
-
-  @override
-  bool shouldRebuild(covariant _TabBarDelegate oldDelegate) =>
-      selectedTab != oldDelegate.selectedTab;
 }

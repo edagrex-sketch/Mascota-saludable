@@ -338,6 +338,132 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen>
   }
 }
 
+// ── Certificate preview dialog ──
+
+void _showCertificatePreview(
+    BuildContext context, String imageUrl, String vaccineName) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (ctx) => Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.all(16),
+      child: Stack(
+        alignment: Alignment.topRight,
+        children: [
+          // Full image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 500,
+                    color: AppColors.surface,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes !=
+                                    null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                            color: AppColors.primary,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Cargando carnet...',
+                            style: AppTypography.bodyMd.copyWith(
+                              color: AppColors.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (_, _, _) => Container(
+                  height: 500,
+                  color: AppColors.surface,
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.broken_image,
+                            size: 48, color: AppColors.error),
+                        SizedBox(height: 12),
+                        Text('Error al cargar la imagen'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Close button
+          Positioned(
+            top: 8,
+            right: 8,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(ctx),
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: Colors.black.withAlpha(120),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+          // Title
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withAlpha(180),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+              child: Text(
+                'Carnet — $vaccineName',
+                style: AppTypography.titleLg.copyWith(
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 // ── Filters ──
 
 class _FilterChip extends StatelessWidget {
@@ -543,22 +669,69 @@ class _TimelineItem extends StatelessWidget {
                           ),
                         ),
                       ],
-                      if (isCompleted && vaccine.batchNumber != null) ...[
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.description,
-                                size: 14, color: AppColors.onSurfaceVariant),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Certificado disponible',
-                              style: AppTypography.labelMd.copyWith(
-                                color: AppColors.onSurfaceVariant,
+                      // Certificate photo
+                      if (vaccine.certificateUrl != null) ...[
+                        const SizedBox(height: 12),
+                        GestureDetector(
+                          onTap: () => _showCertificatePreview(
+                            context,
+                            vaccine.certificateUrl!,
+                            vaccine.name,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                image: NetworkImage(vaccine.certificateUrl!),
+                                fit: BoxFit.cover,
+                                onError: (_, _) {},
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withAlpha(15),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.center,
+                                  colors: [
+                                    Colors.black.withAlpha(120),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                              alignment: Alignment.bottomLeft,
+                              padding: const EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.image,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    'Ver carnet',
+                                    style: AppTypography.labelLg.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ],
+                      ]
                     ],
                   ),
                 ),

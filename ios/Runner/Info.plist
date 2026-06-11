@@ -49,6 +49,10 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para seleccionar una foto de perfil para tu mascota</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Para tomar una foto de perfil para tu mascota</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
