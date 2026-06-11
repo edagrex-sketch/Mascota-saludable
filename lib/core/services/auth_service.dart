@@ -73,10 +73,12 @@ class AuthService {
   Future<AuthResponse> signUp({
     required String email,
     required String password,
+    required String fullName,
   }) {
     return Supabase.instance.client.auth.signUp(
       email: email,
       password: password,
+      data: {'full_name': fullName},
     );
   }
 
@@ -89,5 +91,12 @@ class AuthService {
   /// Refresh the session manually (called automatically by the SDK on expiry).
   Future<AuthResponse?> refreshSession() {
     return Supabase.instance.client.auth.refreshSession();
+  }
+
+  /// Update the user's password.
+  Future<UserResponse> updatePassword(String newPassword) {
+    return Supabase.instance.client.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
   }
 }

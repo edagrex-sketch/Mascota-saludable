@@ -1,10 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/routes/app_router.dart';
 import '../../../../core/services/auth_service.dart';
+import '../../../../core/services/storage_service.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 
@@ -19,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   // ── State ──
   int _selectedTab = 0;
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -26,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen>
   bool _loading = false;
   String? _errorMessage;
   bool _showSuccess = false;
+  File? _avatarFile;
+  final _imagePicker = ImagePicker();
 
   // ── Animation ──
   late final AnimationController _successAnimCtrl;
@@ -53,10 +59,32 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _successAnimCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final picked = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 800,
+        imageQuality: 80,
+      );
+      if (picked != null) {
+        setState(() {
+          _avatarFile = File(picked.path);
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No se pudo seleccionar la imagen')),
+        );
+      }
+    }
   }
 
   // ── Auth ──
@@ -73,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen>
       final auth = AuthService();
       final email = _emailController.text.trim();
       final password = _passwordController.text;
+      final fullName = _nameController.text.trim();
 
       if (_selectedTab == 0) {
         // ── Login ──
@@ -84,7 +113,11 @@ class _LoginScreenState extends State<LoginScreen>
         AuthResponse? response;
 
         try {
-          response = await auth.signUp(email: email, password: password);
+          response = await auth.signUp(
+            email: email,
+            password: password,
+            fullName: fullName,
+          );
         } catch (e) {
           final msg = e.toString();
           // If "User already registered", it means the account exists → just log in.
@@ -101,6 +134,15 @@ class _LoginScreenState extends State<LoginScreen>
 
         // Session created immediately (email confirmation disabled).
         if (response.session != null) {
+          if (_avatarFile != null && response.user != null) {
+            try {
+              final url = await StorageService().uploadAvatar(file: _avatarFile!);
+              await Supabase.instance.client
+                  .from('profiles')
+                  .update({'avatar_url': url})
+                  .eq('id', response.user!.id);
+            } catch (_) {}
+          }
           _onAuthSuccess();
           return;
         }
@@ -110,6 +152,15 @@ class _LoginScreenState extends State<LoginScreen>
         if (!mounted) return;
 
         if (AuthService().isAuthenticated) {
+          if (_avatarFile != null) {
+            try {
+              final url = await StorageService().uploadAvatar(file: _avatarFile!);
+              await Supabase.instance.client
+                  .from('profiles')
+                  .update({'avatar_url': url})
+                  .eq('id', AuthService().currentUser!.id);
+            } catch (_) {}
+          }
           _onAuthSuccess();
         } else {
           _showConfirmationMessage();
@@ -405,6 +456,54 @@ class _LoginScreenState extends State<LoginScreen>
 
             // ── Animated error ──
             _buildAnimatedError(),
+
+            // ── Name & Avatar (only for Register) ──
+            if (_selectedTab == 1) ...[
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.outlineVariant),
+                        ),
+                        child: ClipOval(
+                          child: _avatarFile != null
+                              ? Image.file(_avatarFile!, fit: BoxFit.cover)
+                              : const Icon(Icons.person, size: 40, color: AppColors.outline),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.camera_alt, color: Colors.white, size: 14),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              AppTextField(
+                label: 'Nombre completo',
+                icon: Icons.person_outline,
+                controller: _nameController,
+                hint: 'Juan Pérez',
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) return 'Ingresa tu nombre';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+            ],
 
             // ── Email ──
             AppTextField(
