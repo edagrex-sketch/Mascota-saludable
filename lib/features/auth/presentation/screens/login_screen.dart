@@ -25,8 +25,10 @@ class _LoginScreenState extends State<LoginScreen>
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   bool _loading = false;
   String? _errorMessage;
   bool _showSuccess = false;
@@ -62,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen>
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     _successAnimCtrl.dispose();
     super.dispose();
   }
@@ -174,6 +177,42 @@ class _LoginScreenState extends State<LoginScreen>
     }
   }
 
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+    });
+    try {
+      final auth = AuthService();
+      await auth.signInWithGoogle();
+      if (!mounted) return;
+      _onAuthSuccess();
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _errorMessage = _mapAuthError(e));
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _handleAppleSignIn() async {
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+    });
+    try {
+      final auth = AuthService();
+      await auth.signInWithApple();
+      if (!mounted) return;
+      _onAuthSuccess();
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _errorMessage = _mapAuthError(e));
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
   /// Plays the success animation then navigates home.
   void _onAuthSuccess() {
     setState(() => _showSuccess = true);
@@ -222,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen>
       return 'Ya existe una cuenta con este correo.';
     }
     if (msg.contains('Password should be')) {
-      return 'La contraseña debe tener al menos 6 caracteres.';
+      return 'La contraseña debe tener al menos 8 caracteres.';
     }
     if (msg.contains('rate limit')) {
       return 'Demasiados intentos. Espera un momento e intenta de nuevo.';
@@ -230,7 +269,8 @@ class _LoginScreenState extends State<LoginScreen>
     if (msg.contains('network') || msg.contains('SocketException')) {
       return 'Error de conexión. Verifica tu internet.';
     }
-    return 'Ocurrió un error. Intenta de nuevo.';
+    // Muestra el error real en pantalla para ayudarnos a depurar
+    return 'Error: $msg';
   }
 
   // ── Build ──
@@ -535,10 +575,33 @@ class _LoginScreenState extends State<LoginScreen>
               },
               validator: (v) {
                 if (v == null || v.isEmpty) return 'Ingresa tu contraseña';
-                if (v.length < 6) return 'Mínimo 6 caracteres';
+                if (v.length < 8) return 'Mínimo 8 caracteres';
                 return null;
               },
             ),
+            
+            // ── Confirmar Contraseña (Solo Registro) ──
+            if (_selectedTab == 1) ...[
+              const SizedBox(height: 16),
+              AppTextField(
+                label: 'Confirmar Contraseña',
+                icon: Icons.lock_outline,
+                controller: _confirmPasswordController,
+                obscureText: _obscureConfirmPassword,
+                hint: '••••••••',
+                suffixIcon: _obscureConfirmPassword
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
+                onSuffixTap: () {
+                  setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+                },
+                validator: (v) {
+                  if (v == null || v.isEmpty) return 'Confirma tu contraseña';
+                  if (v != _passwordController.text) return 'Las contraseñas no coinciden';
+                  return null;
+                },
+              ),
+            ],
             const SizedBox(height: 24),
 
             // ── Submit button ──
@@ -708,8 +771,8 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.g_mobiledata, size: 20),
+            onPressed: _loading ? null : _handleGoogleSignIn,
+            icon: const Icon(Icons.g_mobiledata, size: 24),
             label: Text('Google', style: AppTypography.labelLg),
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.onSurface,
@@ -724,7 +787,7 @@ class _LoginScreenState extends State<LoginScreen>
         const SizedBox(width: 12),
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: _loading ? null : _handleAppleSignIn,
             icon: const Icon(Icons.apple, size: 20),
             label: Text('Apple', style: AppTypography.labelLg),
             style: OutlinedButton.styleFrom(

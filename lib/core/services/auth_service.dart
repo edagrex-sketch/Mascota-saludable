@@ -1,4 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io' show Platform;
+import 'package:crypto/crypto.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Centralised authentication service wrapping Supabase Auth.
@@ -97,6 +102,74 @@ class AuthService {
   Future<UserResponse> updatePassword(String newPassword) {
     return Supabase.instance.client.auth.updateUser(
       UserAttributes(password: newPassword),
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Social Auth
+  // ---------------------------------------------------------------------------
+
+  /// Sign in with Google
+  Future<AuthResponse> signInWithGoogle() async {
+    // IMPORTANTE: Reemplaza estos IDs con los de tu proyecto en Google Cloud Console
+    const webClientId = '178992933358-tl2iim1j095upne9o309t0bsv2dm7c6l.apps.googleusercontent.com'; 
+    const iosClientId = 'TU_IOS_CLIENT_ID_AQUI';
+    
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: Platform.isIOS ? iosClientId : null, // En Android, NO se debe enviar el webClientId aquí
+      serverClientId: webClientId,
+    );
+    
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      throw 'Inicio de sesión con Google cancelado.';
+    }
+    
+    final googleAuth = await googleUser.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
+
+    if (accessToken == null) {
+      throw 'No se pudo obtener el Access Token de Google.';
+    }
+    if (idToken == null) {
+      throw 'No se pudo obtener el ID Token de Google.';
+    }
+
+    return Supabase.instance.client.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+  }
+
+  /// Sign in with Apple
+  Future<AuthResponse> signInWithApple() async {
+    if (!Platform.isIOS && !Platform.isMacOS) {
+      throw 'El inicio de sesión con Apple solo está disponible en iOS/macOS.';
+    }
+    
+    // Generamos un nonce para evitar ataques de repetición
+    final rawNonce = Supabase.instance.client.auth.generateRawNonce();
+    final hashedNonce = sha256.convert(utf8.encode(rawNonce)).toString();
+
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: hashedNonce,
+    );
+
+    final idToken = credential.identityToken;
+    if (idToken == null) {
+      throw 'No se pudo obtener el token de Apple.';
+    }
+
+    return Supabase.instance.client.auth.signInWithIdToken(
+      provider: OAuthProvider.apple,
+      idToken: idToken,
+      nonce: rawNonce,
     );
   }
 }
