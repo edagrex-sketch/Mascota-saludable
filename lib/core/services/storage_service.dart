@@ -78,6 +78,19 @@ class StorageService {
     return _client.storage.from(_bucket).getPublicUrl(path);
   }
 
+  /// Upload a user avatar photo and return the public URL.
+  Future<String> uploadAvatar({required File file}) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) throw Exception('Usuario no autenticado');
+
+    final ext = file.path.split('.').last.toLowerCase();
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final path = '$userId/avatar_$timestamp.$ext';
+
+    await _client.storage.from('avatars').upload(path, file);
+    return _client.storage.from('avatars').getPublicUrl(path);
+  }
+
   /// Delete a file from storage given its public URL.
   Future<void> deletePhoto(String photoUrl) async {
     final path = _extractPath(photoUrl);

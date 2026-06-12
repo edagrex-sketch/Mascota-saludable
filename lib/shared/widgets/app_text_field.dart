@@ -15,6 +15,7 @@ class AppTextField extends StatelessWidget {
     this.hint,
     this.suffixIcon,
     this.onSuffixTap,
+    this.maxLines = 1,
   });
 
   final String label;
@@ -26,6 +27,7 @@ class AppTextField extends StatelessWidget {
   final String? hint;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class AppTextField extends StatelessWidget {
           obscureText: obscureText,
           keyboardType: keyboardType,
           validator: validator,
+          maxLines: maxLines,
           style: AppTypography.bodyMd.copyWith(color: AppColors.onSurface),
           decoration: InputDecoration(
             hintText: hint,

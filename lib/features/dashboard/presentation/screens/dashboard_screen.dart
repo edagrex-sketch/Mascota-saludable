@@ -32,6 +32,15 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
+    
+    // Cargar el nombre inmediatamente para evitar el parpadeo en el AppBar
+    final user = AuthService().currentUser;
+    final meta = user?.userMetadata;
+    _userName = (meta?['full_name'] as String?) ?? 
+                (meta?['name'] as String?) ?? 
+                user?.email?.split('@')[0] ?? 
+                'Usuario';
+
     _staggerCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 700),
@@ -62,8 +71,11 @@ class _DashboardScreenState extends State<DashboardScreen>
       if (!mounted) return;
       setState(() {
         _pets = pets;
-        _userName =
-            user?.userMetadata?['full_name'] as String? ?? user?.email ?? 'Usuario';
+        final meta = user?.userMetadata;
+        _userName = (meta?['full_name'] as String?) ?? 
+                    (meta?['name'] as String?) ?? 
+                    user?.email?.split('@')[0] ?? 
+                    'Usuario';
         _loading = false;
       });
       _staggerCtrl.forward(from: 0);

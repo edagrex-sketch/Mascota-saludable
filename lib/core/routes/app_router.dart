@@ -12,6 +12,10 @@ import '../../features/vaccinations/presentation/screens/register_vaccine_screen
 import '../../features/medical_visits/presentation/screens/visits_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/profile/presentation/screens/edit_profile_screen.dart';
+import '../../features/profile/presentation/screens/health_preferences_screen.dart';
+import '../../features/profile/presentation/screens/notification_settings_screen.dart';
+import '../../core/models/profile_model.dart';
 import '../../shared/widgets/app_bottom_nav.dart';
 import '../services/auth_service.dart';
 
@@ -29,6 +33,9 @@ abstract class AppRoutes {
   static const visits = '/visits';
   static const notifications = '/notifications';
   static const profile = '/profile';
+  static const editProfile = '/profile/edit';
+  static const healthPreferences = '/profile/health-preferences';
+  static const notificationSettings = '/profile/notification-settings';
 }
 
 /// Routes that require the user to be authenticated.
@@ -37,6 +44,9 @@ final _protectedRoutes = <String>{
   AppRoutes.pets,
   AppRoutes.notifications,
   AppRoutes.profile,
+  AppRoutes.editProfile,
+  AppRoutes.healthPreferences,
+  AppRoutes.notificationSettings,
   AppRoutes.vaccinations,
   AppRoutes.vaccineHistory,
   AppRoutes.registerVaccine,
@@ -90,6 +100,24 @@ final goRouter = GoRouter(
       path: AppRoutes.petDetail,
       builder: (_, state) => PetDetailScreen(
         petId: state.pathParameters['id'] ?? '',
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.editProfile,
+      builder: (_, state) => EditProfileScreen(
+        profile: state.extra as ProfileModel?,
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.healthPreferences,
+      builder: (_, state) => HealthPreferencesScreen(
+        profile: state.extra as ProfileModel?,
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.notificationSettings,
+      builder: (_, state) => NotificationSettingsScreen(
+        profile: state.extra as ProfileModel?,
       ),
     ),
     ShellRoute(
